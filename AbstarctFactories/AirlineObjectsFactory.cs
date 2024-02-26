@@ -12,10 +12,9 @@ using OODProj.Data.Users;
 
 namespace OODProj.AbstarctFactories
 {
-    public interface ICreateFactory
+    public interface IFactory
     {
-        public ICreateFactory SetValues(List<string> args);
-        public IDisplayable Create();
+        public IPrimaryKeyed Create(List<string> atomicVals, List<List<string>> arrayVals);
     }
 
     

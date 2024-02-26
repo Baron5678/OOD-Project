@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace OODProj.AbstarctFactories
 {
 
-    public class CargoPlaneFactory : ICreateFactory
+    public class CargoPlaneFactory : IFactory
     {
         private CargoPlane _plane;
 
@@ -64,9 +64,14 @@ namespace OODProj.AbstarctFactories
             return this;
         }
 
-        public IDisplayable Create()
+        public IPrimaryKeyed Create()
         {
             return _plane;
+        }
+
+        public IPrimaryKeyed Create(List<string> atomicVals, List<List<string>> arrayVals)
+        {
+            throw new NotImplementedException();
         }
     }  
 }
