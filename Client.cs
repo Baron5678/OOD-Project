@@ -15,13 +15,13 @@ namespace OODProj
             Dictionary<string, ICreateFactory> factories = new()
             {
                 { CargoPlane.ObjectID, new CargoPlaneFactory() },
-                { CargoPlane.ObjectID, new PassengerPlaneFactory() }
+                { PassengerPlane.ObjectID, new PassengerPlaneFactory() }
             };
 
             Dictionary<string, IAddStrategy> strategies = new()
             {
                 { CargoPlane.ObjectID, new CargoPlaneAddStrategy() },
-                { CargoPlane.ObjectID, new PassengerPlaneAddStrategy() }
+                { PassengerPlane.ObjectID, new PassengerPlaneAddStrategy() }
             };
 
             Dictionary<string, IReader> reader = new()
