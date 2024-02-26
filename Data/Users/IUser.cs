@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace OODProj.Data.Users
 {
-    public interface IUser : IDisplayable
+    public interface IUser : IPrimaryKeyed
     {
         public string Name { get; set; }
         public ulong Age { get; set; }

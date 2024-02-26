@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OODProj.Data
 {
-    public class Airport: IDisplayable, ICloneable
+    public class Airport: IPrimaryKeyed, ICloneable
     {
         static public string ObjectID { get => "AI"; }
 

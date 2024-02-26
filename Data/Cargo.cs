@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OODProj.Data
 {
-    public class Cargo : IDisplayable, ICloneable
+    public class Cargo : IPrimaryKeyed, ICloneable
     {
         static public string ObjectID { get => "CA"; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OODProj.Data.Planes
 {
-    public interface IPlane : IDisplayable
+    public interface IPlane : IPrimaryKeyed
     {
         public string Serial { get; set; }
         public string Country { get; set; }
