@@ -29,7 +29,7 @@ namespace OODProj
                 { "FTR", new FTRReader("data.csv", data, factories, strategies) },
             };
 
-            reader["FTR"].Read();
+            //reader["FTR"].Read();
             
         }
     }
