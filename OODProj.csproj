@@ -11,4 +11,10 @@
     <PackageReference Include="LibGit2Sharp" Version="0.29.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DataFiles\Test.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

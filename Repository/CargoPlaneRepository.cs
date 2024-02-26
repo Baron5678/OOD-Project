@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OODProj.StrategiesGettingData.DataSerializers;
 
 namespace OODProj.Repository
 {
@@ -30,6 +31,11 @@ namespace OODProj.Repository
             return _cargoPlanes.Where(x => x.ID == id).ToList()[0];
         }
 
+        public List<IPrimaryKeyed> GetAll() 
+        {
+            return _cargoPlanes.Cast<IPrimaryKeyed>().ToList();
+        }
+
         public void IAddToRepo(IPrimaryKeyed keyedObject)
         {
             var temp = keyedObject as CargoPlane;
@@ -38,6 +44,11 @@ namespace OODProj.Repository
                 throw new ArgumentException("Object cannot be added to Cargo Plane Repository");
 
             _cargoPlanes.Add(temp);
+        }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

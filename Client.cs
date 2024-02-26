@@ -2,8 +2,9 @@
 using OODProj.Data;
 using OODProj.Data.Planes;
 using OODProj.Data.Users;
-using OODProj.StorageData;
 using OODProj.Repository;
+using OODProj.StrategiesGettingData.DataReaders;
+using OODProj.StrategiesGettingData.DataSerializers;
 
 namespace OODProj
 {
@@ -11,7 +12,13 @@ namespace OODProj
     {
         static void Main(string[] args)
         {
-            DataContainer data = new();
+            string readerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "Test.txt");
+
+            List<string> JSONPaths = new()
+            {
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "CargoPlanes"),
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "PassengerPlanes")
+            };
 
             Dictionary<string, IFactory> factories = new()
             {
@@ -27,10 +34,29 @@ namespace OODProj
 
             Dictionary<string, IReader> reader = new()
             {
-                { "FTR", new FTRReader("data.csv", factories, repos) },
+                { "FTR", new FTRReader(readerPath, factories, repos) },
+            };
+
+            Dictionary<string , IVisitor> repoActions = new()
+            {
+                { "JSON", new JSONSerializer("./DataFiles/Default") }
             };
 
             reader["FTR"].Read();
+
+            foreach (var item in repos[CargoPlane.ObjectID].GetAll())
+            {
+                Console.WriteLine(item);
+            }
+
+            var CPRepo = repos[CargoPlane.ObjectID] as CargoPlaneRepository;
+
+            if(CPRepo is null)
+                throw new Exception("Invalid cast");
+
+            repoActions["JSON"].Path = JSONPaths[0];
+            repoActions["JSON"].Visit(CPRepo);
+            
             
         }
     }

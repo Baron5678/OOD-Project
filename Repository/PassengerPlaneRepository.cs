@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OODProj.StrategiesGettingData.DataSerializers;
 
 namespace OODProj.Repository
 {
@@ -12,7 +13,7 @@ namespace OODProj.Repository
     {
         private List<PassengerPlane> _passengerPlanes;
 
-        public List<PassengerPlane> DataPassengerPlane { get => _passengerPlanes; set => _passengerPlanes = value; }
+        public List<PassengerPlane> PassengerPlane { get => _passengerPlanes; set => _passengerPlanes = value; }
 
         public PassengerPlaneRepository()
         {
@@ -37,6 +38,16 @@ namespace OODProj.Repository
                 throw new ArgumentException("Object cannot be added to Passenger Plane Repository");
 
             _passengerPlanes.Add(temp);
+        }
+
+        public List<IPrimaryKeyed> GetAll()
+        {
+            return _passengerPlanes.Cast<IPrimaryKeyed>().ToList();
+        }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

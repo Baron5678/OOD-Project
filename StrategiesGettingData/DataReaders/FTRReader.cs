@@ -9,13 +9,8 @@ using OODProj.Data.Users;
 using OODProj.AbstarctFactories;
 using OODProj.Repository;
 
-namespace OODProj.StorageData
+namespace OODProj.StrategiesGettingData.DataReaders
 {
-    public interface IReader
-    {
-        void Read();
-    }
-
     public class FTRReader : IReader
     {
         private string _path;
@@ -24,7 +19,7 @@ namespace OODProj.StorageData
 
         private Dictionary<string, IRepository> _repos;
 
-        public FTRReader(string path, Dictionary<string, IFactory> factories, Dictionary<string, IRepository> repos) 
+        public FTRReader(string path, Dictionary<string, IFactory> factories, Dictionary<string, IRepository> repos)
             => (_path, _factories, _repos) = (path, factories, repos);
 
         public void Read()
@@ -43,7 +38,7 @@ namespace OODProj.StorageData
 
                         foreach (var item in splittedLine)
                         {
-                            if (item.IndexOf('[') != -1) 
+                            if (item.IndexOf('[') != -1)
                             {
                                 arrayVals = new List<List<string>>();
                                 var arraySplittedVals = item.Substring(1, item.Length - 2).Split(";");
