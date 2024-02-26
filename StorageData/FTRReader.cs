@@ -7,6 +7,7 @@ using OODProj.Data;
 using OODProj.Data.Planes;
 using OODProj.Data.Users;
 using OODProj.AbstarctFactories;
+using OODProj.Repository;
 
 namespace OODProj.StorageData
 {
@@ -19,13 +20,12 @@ namespace OODProj.StorageData
     {
         private string _path;
 
-        private Dictionary<string, ICreateFactory> _factories;
+        private Dictionary<string, IFactory> _factories;
 
-        private Dictionary<string, IAddStrategy> _strategies;
-        private DataContainer _data = new();
+        private Dictionary<string, IRepository> _repos;
 
-        public FTRReader(string path, DataContainer data, Dictionary<string, ICreateFactory> factories, Dictionary<string, IAddStrategy> strategies) 
-            => (_path, _data, _factories, _strategies) = (path, data, factories, strategies);
+        public FTRReader(string path, Dictionary<string, IFactory> factories, Dictionary<string, IRepository> repos) 
+            => (_path, _factories, _repos) = (path, factories, repos);
 
         public void Read()
         {
@@ -39,9 +39,22 @@ namespace OODProj.StorageData
                     {
                         string[] splittedLine = line.Split(",");
 
-                        var obj = _factories[splittedLine[0]].SetValues(splittedLine.ToList()).Create();
+                        List<List<string>>? arrayVals = null;
 
-                        _strategies[splittedLine[0]].AddToContainer(_data, obj);
+                        foreach (var item in splittedLine)
+                        {
+                            if (item.IndexOf('[') != -1) 
+                            {
+                                arrayVals = new List<List<string>>();
+                                var arraySplittedVals = item.Substring(1, item.Length - 2).Split(";");
+                                foreach (var arrayItem in arraySplittedVals)
+                                {
+                                    arrayVals.Add(arraySplittedVals.ToList());
+                                }
+                            }
+                        }
+
+                        _repos[splittedLine[0]].IAddToRepo(_factories[splittedLine[0]].Create(splittedLine.ToList(), arrayVals));
                     }
                 }
             }

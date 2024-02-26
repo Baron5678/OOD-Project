@@ -3,7 +3,7 @@ using OODProj.Data;
 using OODProj.Data.Planes;
 using OODProj.Data.Users;
 using OODProj.StorageData;
-using LibGit2Sharp;
+using OODProj.Repository;
 
 namespace OODProj
 {
@@ -13,24 +13,24 @@ namespace OODProj
         {
             DataContainer data = new();
 
-            Dictionary<string, ICreateFactory> factories = new()
+            Dictionary<string, IFactory> factories = new()
             {
                 { CargoPlane.ObjectID, new CargoPlaneFactory() },
                 { PassengerPlane.ObjectID, new PassengerPlaneFactory() }
             };
 
-            Dictionary<string, IAddStrategy> strategies = new()
+            Dictionary<string, IRepository> repos = new()
             {
-                { CargoPlane.ObjectID, new CargoPlaneAddStrategy() },
-                { PassengerPlane.ObjectID, new PassengerPlaneAddStrategy() }
+                { CargoPlane.ObjectID, new CargoPlaneRepository() },
+                { PassengerPlane.ObjectID, new PassengerPlaneRepository() }
             };
 
             Dictionary<string, IReader> reader = new()
             {
-                { "FTR", new FTRReader("data.csv", data, factories, strategies) },
+                { "FTR", new FTRReader("data.csv", factories, repos) },
             };
 
-            //reader["FTR"].Read();
+            reader["FTR"].Read();
             
         }
     }
