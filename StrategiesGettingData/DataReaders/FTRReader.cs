@@ -49,7 +49,7 @@ namespace OODProj.StrategiesGettingData.DataReaders
                             }
                         }
 
-                        _repos[splittedLine[0]].IAddToRepo(_factories[splittedLine[0]].Create(splittedLine.ToList(), arrayVals));
+                        _repos[splittedLine[0]].AddToRepo(_factories[splittedLine[0]].Create(splittedLine.ToList(), arrayVals));
                     }
                 }
             }

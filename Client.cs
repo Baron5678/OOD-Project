@@ -49,15 +49,14 @@ namespace OODProj
                 Console.WriteLine(item);
             }
 
-            var CPRepo = repos[CargoPlane.ObjectID] as CargoPlaneRepository;
+            repos[CargoPlane.ObjectID].SerializeFormat.Path = JSONPaths[0];
 
-            if(CPRepo is null)
-                throw new Exception("Invalid cast");
+            repos[CargoPlane.ObjectID].Accept();
 
-            repoActions["JSON"].Path = JSONPaths[0];
-            repoActions["JSON"].Visit(CPRepo);
+          
+
             
-            
+        
         }
     }
 
