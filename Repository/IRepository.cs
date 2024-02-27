@@ -11,10 +11,10 @@ namespace OODProj.Repository
 {
     public interface IRepository
     {
+        ISerializer SerializeFormat { get; set; }
+
         void AddToRepo(IPrimaryKeyed keyedObject);
-        List<IPrimaryKeyed> GetAll();
-        IVisitor SerializeFormat { get; set; }
-        void Accept(IVisitor visitor);
-        void Accept();
+        void DisplayObjects();
+        void SerializeRepository();
     }
 }

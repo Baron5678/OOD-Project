@@ -1,10 +1,14 @@
 ﻿using OODProj.AbstarctFactories;
+using OODProj.AbstarctFactories.UserFactories;
+using OODProj.AbstarctFactories.PlaneFactories;
 using OODProj.Data;
 using OODProj.Data.Planes;
 using OODProj.Data.Users;
 using OODProj.Repository;
 using OODProj.StrategiesGettingData.DataReaders;
 using OODProj.StrategiesGettingData.DataSerializers;
+using OODProj.Repository.PlaneRepositories;
+using OODProj.Repository.UserRepositories;
 
 namespace OODProj
 {
@@ -12,8 +16,16 @@ namespace OODProj
     {
         static void Main(string[] args)
         {
-            string readerPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "Test.txt");
+            //Configurations
+            #region Configurations
 
+            //Paths, where data is retrieved from
+            List<string> ReaderPaths = new()
+            {
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "Test.txt")
+            };
+
+            //Paths, where data is written to
             List<string> JSONPaths = new()
             {
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "CargoPlanes"),
@@ -22,43 +34,53 @@ namespace OODProj
 
             Dictionary<string, IFactory> factories = new()
             {
-                { CargoPlane.ObjectID, new CargoPlaneFactory() },
-                { PassengerPlane.ObjectID, new PassengerPlaneFactory() }
+                { CargoPlane.ClassID, new CargoPlaneFactory() },
+                { PassengerPlane.ClassID, new PassengerPlaneFactory() },
+                { Cargo.ClassID, new CargoFactory() },
+                { Passenger.ClassID, new PassengerFactory() },
+                { Crew.ClassID, new CrewFactory() },
+                { Airport.ClassID, new AirportFactory() },
+                { Flight.ClassID, new FlightFactory() },
             };
 
             Dictionary<string, IRepository> repos = new()
             {
-                { CargoPlane.ObjectID, new CargoPlaneRepository() },
-                { PassengerPlane.ObjectID, new PassengerPlaneRepository() }
+                { CargoPlane.ClassID, new CargoPlaneRepository() },
+                { PassengerPlane.ClassID, new PassengerPlaneRepository() },
+                { Cargo.ClassID, new CargoRepository() },
+                { Passenger.ClassID, new PassengerRepository() },
+                { Crew.ClassID, new CrewRepository() },
+                { Airport.ClassID, new AirportRepository() },
+                { Flight.ClassID, new FlightRepository() }
             };
 
             Dictionary<string, IReader> reader = new()
             {
-                { "FTR", new FTRReader(readerPath, factories, repos) },
+                { "FTR", new FTRReader(ReaderPaths[0], factories, repos) },
             };
-
-            Dictionary<string , IVisitor> repoActions = new()
-            {
-                { "JSON", new JSONSerializer("./DataFiles/Default") }
-            };
+            #endregion
 
             reader["FTR"].Read();
 
-            foreach (var item in repos[CargoPlane.ObjectID].GetAll())
+            //Checking if data was read correctly
+            foreach (var repo in repos)
             {
-                Console.WriteLine(item);
+                repo.Value.DisplayObjects();
             }
 
-            repos[CargoPlane.ObjectID].SerializeFormat.Path = JSONPaths[0];
+            //int i = 0;
+            //foreach (var repo in repos)
+            //{
+            //    repo.Value.SerializeFormat.Path = JSONPaths[i++];
+            //}
+            //repos[CargoPlane.ClassID].SerializeFormat.Path = JSONPaths[0];
 
-            repos[CargoPlane.ObjectID].Accept();
-
-          
-
-            
-        
+            ////Serialization objects 
+            //foreach (var repo in repos)
+            //{
+            //    repo.Value.SerializeRepository();
+            //}
         }
     }
-
 }
 

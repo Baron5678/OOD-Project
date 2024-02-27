@@ -8,7 +8,7 @@ namespace OODProj.Data.Planes
 {
     public class PassengerPlane : IPlane, ICloneable
     {
-        static public string ObjectID { get => "PP"; }
+        static public string ClassID { get => "PP"; }
 
         private ulong _id;
         private string _serial;

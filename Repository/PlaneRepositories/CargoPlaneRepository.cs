@@ -1,31 +1,21 @@
 ﻿using OODProj.Data;
 using OODProj.Data.Planes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OODProj.StrategiesGettingData.DataSerializers;
 
-namespace OODProj.Repository
+namespace OODProj.Repository.PlaneRepositories
 {
     public class CargoPlaneRepository : IRepository
     {
         private List<CargoPlane> _cargoPlanes;
+        private ISerializer _serializeFormat;
 
-        public IVisitor SerializeFormat { get; set; }
-
+        public ISerializer SerializeFormat { get => _serializeFormat; set => _serializeFormat = value; }
         public List<CargoPlane> CargoPlanes { get => _cargoPlanes; set => _cargoPlanes = value; }
 
         public CargoPlaneRepository()
         {
             _cargoPlanes = new List<CargoPlane>();
-            SerializeFormat = new JSONSerializer("./DataFiles/Default");
-        }
-
-        public List<IPrimaryKeyed> GetAll() 
-        {
-            return _cargoPlanes.Cast<IPrimaryKeyed>().ToList();
+            _serializeFormat = new JSONSerializer();
         }
 
         public void AddToRepo(IPrimaryKeyed keyedObject)
@@ -38,14 +28,17 @@ namespace OODProj.Repository
             _cargoPlanes.Add(temp);
         }
 
-        public void Accept(IVisitor visitor)
+        public void SerializeRepository()
         {
-            visitor.Visit(this);
+            SerializeFormat.Serialize(this);
         }
 
-        public void Accept()
+        public void DisplayObjects()
         {
-            SerializeFormat.Visit(this);
+            foreach (var plane in _cargoPlanes)
+            {
+                Console.WriteLine(plane.ToString());
+            }
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OODProj.Data.Users
 {
-    public class Passenger : ICloneable
+    public class Passenger : IUser, ICloneable
     {
-        static public string ObjectID { get => "P"; }
+        static public string ClassID { get => "P"; }
 
         private ulong _id;
         private string _name;

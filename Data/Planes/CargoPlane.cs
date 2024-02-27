@@ -8,7 +8,7 @@ namespace OODProj.Data.Planes
 {
     public class CargoPlane : IPlane, ICloneable
     {
-        static public string ObjectID { get => "CP"; }
+        static public string ClassID { get => "CP"; }
 
         private ulong _id;
         private string _serial;
@@ -21,8 +21,7 @@ namespace OODProj.Data.Planes
         public string Country { get => _country; set => _country = value; }
         public string Model { get => _model; set => _model = value; }
         public float MaxLoad { get => _maxload; set => _maxload = value; }
-        public string GetObjectID() => ObjectID;
-
+    
         public CargoPlane()
         {
             _id = default;

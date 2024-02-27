@@ -9,7 +9,7 @@ namespace OODProj.Data
 {
     public class Airport: IPrimaryKeyed, ICloneable
     {
-        static public string ObjectID { get => "AI"; }
+        static public string ClassID { get => "AI"; }
 
         private UInt64 _id;
         private string _name;
@@ -59,11 +59,6 @@ namespace OODProj.Data
         public object Clone()
         {
             return new Airport(_id, _name, _code, _longitude, _latitude, _AMSL, _country);
-        }
-
-        public string GetObjectID()
-        {
-            return ObjectID;
         }
     }
 }

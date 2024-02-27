@@ -53,7 +53,7 @@ namespace OODProj.StrategiesGettingData.DataReaders
                     }
                 }
             }
-            catch (Exception e)
+            catch (FileNotFoundException e)
             {
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);

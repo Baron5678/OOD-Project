@@ -8,7 +8,7 @@ namespace OODProj.Data
 {
     public class Flight : IPrimaryKeyed, ICloneable
     {
-        static public string ObjectID { get => "FL"; }
+        static public string ClassID { get => "FL"; }
 
         private UInt64 _id;
         private UInt64 _idOrigin;

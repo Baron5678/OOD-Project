@@ -8,7 +8,7 @@ namespace OODProj.Data
 {
     public class Cargo : IPrimaryKeyed, ICloneable
     {
-        static public string ObjectID { get => "CA"; }
+        static public string ClassID { get => "CA"; }
 
         private UInt64 _id;
         private string _weight;

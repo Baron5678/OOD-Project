@@ -14,8 +14,6 @@ namespace OODProj.AbstarctFactories
 {
     public interface IFactory
     {
-        public IPrimaryKeyed Create(List<string> atomicVals, List<List<string>>? arrayVals);
-    }
-
-    
+        IPrimaryKeyed Create(List<string> atomicVals, List<List<string>>? arrayVals);
+    }   
 }

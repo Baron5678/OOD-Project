@@ -8,19 +8,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OODProj.AbstarctFactories
+namespace OODProj.AbstarctFactories.PlaneFactories
 {
-
     public class CargoPlaneFactory : IFactory
     {
         public IPrimaryKeyed Create(List<string> atomicVals, List<List<string>>? arrayVals)
         {
-            return new CargoPlane(ulong.Parse(atomicVals[1]), 
-                                  atomicVals[2], 
-                                  atomicVals[3], 
-                                  atomicVals[4], 
-                                  float.Parse(atomicVals[5])
-                                  );
+            return new CargoPlane(ulong.Parse(atomicVals[1]),
+                                  atomicVals[2],
+                                  atomicVals[3],
+                                  atomicVals[4],
+                                  float.Parse(atomicVals[5]));
         }
-    }  
+    }
 }

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OODProj.AbstarctFactories
+namespace OODProj.AbstarctFactories.PlaneFactories
 {
-    internal class PassengerPlaneFactory : IFactory
+    public class PassengerPlaneFactory : IFactory
     {
         public IPrimaryKeyed Create(List<string> atomicVals, List<List<string>>? arrayVals)
         {
@@ -18,8 +18,7 @@ namespace OODProj.AbstarctFactories
                                       atomicVals[4],
                                      ushort.Parse(atomicVals[6]),
                                      ushort.Parse(atomicVals[7]),
-                                     ushort.Parse(atomicVals[8])
-                                     );                                                                                                                                                                                          
+                                     ushort.Parse(atomicVals[8]));
         }
     }
 }

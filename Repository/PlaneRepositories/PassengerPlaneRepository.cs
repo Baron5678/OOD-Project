@@ -7,20 +7,20 @@ using System.Text;
 using System.Threading.Tasks;
 using OODProj.StrategiesGettingData.DataSerializers;
 
-namespace OODProj.Repository
+namespace OODProj.Repository.PlaneRepositories
 {
     public class PassengerPlaneRepository : IRepository
     {
         private List<PassengerPlane> _passengerPlanes;
+        private ISerializer _serializeFormat;
 
-        public IVisitor SerializeFormat { get; set; }
-
+        public ISerializer SerializeFormat { get => _serializeFormat; set => _serializeFormat = value; }
         public List<PassengerPlane> PassengerPlane { get => _passengerPlanes; set => _passengerPlanes = value; }
 
         public PassengerPlaneRepository()
         {
             _passengerPlanes = new List<PassengerPlane>();
-            SerializeFormat = new JSONSerializer("./DataFiles/Default.json");
+            _serializeFormat = new JSONSerializer();
         }
 
         public void AddToRepo(IPrimaryKeyed keyedObject)
@@ -33,19 +33,17 @@ namespace OODProj.Repository
             _passengerPlanes.Add(temp);
         }
 
-        public List<IPrimaryKeyed> GetAll()
+        public void SerializeRepository()
         {
-            return _passengerPlanes.Cast<IPrimaryKeyed>().ToList();
+            _serializeFormat.Serialize(this);
         }
 
-        public void Accept(IVisitor visitor)
+        public void DisplayObjects()
         {
-            visitor.Visit(this);
-        }
-
-        public void Accept()
-        {
-            SerializeFormat.Visit(this);
+            foreach (var plane in _passengerPlanes)
+            {
+                Console.WriteLine(plane.ToString());
+            }
         }
     }
 }
