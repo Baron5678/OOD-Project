@@ -73,6 +73,7 @@ namespace OODProj
                 repo.Value.DisplayObjects();
             }
 
+            //Setting paths for serialization
             foreach (var repo in repos)
             {
                 repo.Value.SerializeFormat.Path = JSONPaths[repo.Key];

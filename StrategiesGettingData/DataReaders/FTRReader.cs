@@ -21,23 +21,31 @@ namespace OODProj.StrategiesGettingData.DataReaders
                 StreamReader sr = new StreamReader(_path);
                 
                 string line;
-
+                //Getting each line representing an object
                 while ((line = sr.ReadLine()!) != null)
                 {
+                        //Splitting the line into string values
+                        //IMPORTANT: first string value is the classID in each line,
+                        //so it is used to determine the type of object to be created
+                        //and splittedLine[0] is ClassID
                         string[] splittedLine = line.Split(",");
 
                         List<List<string>> arrayVals = new();
 
                         foreach (var item in splittedLine)
                         {
+                            //Checking if the item is an array
                             if (item.IndexOf('[') != -1)
                             {
+                                //Adding the array to the list of arrays
                                 var arraySplittedVals = item.Substring(1, item.Length - 2).Split(";");
                                 arrayVals.Add(arraySplittedVals.ToList());
                             }
                         }
+                        // Adding the object to the repository initialized with values from file to being processed
                         _repos[splittedLine[0]].AddToRepo(_factories[splittedLine[0]].Create(splittedLine.ToList(), arrayVals));
                 }
+
                sr.Close();
             }
             catch (FileNotFoundException e)
