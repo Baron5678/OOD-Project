@@ -38,7 +38,7 @@ namespace OODProj.Data
 
         public override string ToString()
         {
-            return $"ID: {_id}\n Weight: {_weight}\n Code: {_code}\n Description: {_description}";
+            return $"[Cargo]\nID: {_id}\n Weight: {_weight}\n Code: {_code}\n Description: {_description}\n";
         }
 
         public object Clone()

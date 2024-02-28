@@ -1,18 +1,11 @@
-﻿using OODProj.Data;
-using OODProj.Data.Planes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
+﻿using OODProj.Repository;
 using OODProj.Repository.PlaneRepositories;
 using OODProj.Repository.UserRepositories;
-using OODProj.Repository;
+using System.Text.Json;
 
 namespace OODProj.StrategiesGettingData.DataSerializers
 {
-    public class JSONSerializer: ISerializer
+    public class JSONSerializer : ISerializer
     {
         private string _path;
         private JsonSerializerOptions _options;
@@ -26,49 +19,63 @@ namespace OODProj.StrategiesGettingData.DataSerializers
             _options = new JsonSerializerOptions();
             _options.WriteIndented = true;
         }
-       
+
+        private void WriteToFile(string jsonString)
+        {
+            var fileStream = File.Create(_path);
+            var writer = new StreamWriter(fileStream);
+            writer.Write(jsonString);
+            writer.Close();
+            fileStream.Close();
+        }
+
         public void Serialize(CargoPlaneRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.CargoPlanes, _options);
 
-            File.WriteAllText(_path, jsonString);
+            WriteToFile(jsonString);
         }
 
         public void Serialize(PassengerPlaneRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.PassengerPlane, _options);
 
-            File.WriteAllText(_path, jsonString);
+            WriteToFile(jsonString);
         }
 
         public void Serialize(PassengerRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.Passengers, _options);
-            File.WriteAllText(_path, jsonString);
+
+            WriteToFile(jsonString);
         }
 
         public void Serialize(CrewRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.Crews, _options);
-            File.WriteAllText(_path, jsonString);
+
+            WriteToFile(jsonString);
         }
 
         public void Serialize(FlightRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.Flights, _options);
-            File.WriteAllText(_path, jsonString);
+
+            WriteToFile(jsonString);
         }
 
         public void Serialize(CargoRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.Cargos, _options);
-            File.WriteAllText(_path, jsonString);
+
+            WriteToFile(jsonString);
         }
 
         public void Serialize(AirportRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.Airports, _options);
-            File.WriteAllText(_path, jsonString);
+           
+            WriteToFile(jsonString);
         }
     }
 }

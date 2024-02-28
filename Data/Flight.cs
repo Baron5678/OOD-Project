@@ -81,7 +81,21 @@ namespace OODProj.Data
         // ToString
         public override string ToString()
         {
-            return $"ID: {_id}\n" +
+           StringBuilder sbIdCargos = new StringBuilder();
+           StringBuilder sbIdLoads = new StringBuilder();
+
+            foreach (var item in _idCargos)
+            {
+                sbIdCargos.Append($"{item} ");
+            }
+
+            foreach (var item in _idLoad)
+            {
+                sbIdLoads.Append($"{item} ");
+            }
+
+            return $"[Flight]\n" +
+                   $"ID: {_id}\n" +
                    $"Origin: {_idOrigin}\n" +
                    $"Target: {_idTarget}\n" +
                    $"Takeoff Time: {_takeoffTime}\n" +
@@ -90,8 +104,8 @@ namespace OODProj.Data
                    $"Latitude: {_latitude}\n" +
                    $"AMSL: {_AMSL}\n" +
                    $"Plane: {_idPlane}\n" +
-                   $"Cargo: {_idCargos}\n" +
-                   $"Load: {_idLoad}";
+                   $"Cargo: {sbIdCargos}\n" +
+                   $"Load: {sbIdLoads}\n";
         }
 
         // Clone

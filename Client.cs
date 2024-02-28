@@ -6,7 +6,6 @@ using OODProj.Data.Planes;
 using OODProj.Data.Users;
 using OODProj.Repository;
 using OODProj.StrategiesGettingData.DataReaders;
-using OODProj.StrategiesGettingData.DataSerializers;
 using OODProj.Repository.PlaneRepositories;
 using OODProj.Repository.UserRepositories;
 
@@ -22,14 +21,19 @@ namespace OODProj
             //Paths, where data is retrieved from
             List<string> ReaderPaths = new()
             {
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "Test.txt")
+                @"..\..\..\DataFiles\Source\example_data.ftr"
             };
 
             //Paths, where data is written to
-            List<string> JSONPaths = new()
+            Dictionary<string, string> JSONPaths = new()
             {
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "CargoPlanes"),
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataFiles", "PassengerPlanes")
+                {CargoPlane.ClassID, @"..\..\..\DataFiles\JSON\CargoPlane.json"},
+                {PassengerPlane.ClassID, @"..\..\..\DataFiles\JSON\PassengerPlane.json"},
+                {Cargo.ClassID, @"..\..\..\DataFiles\JSON\Cargo.json"},
+                {Passenger.ClassID, @"..\..\..\DataFiles\JSON\Passenger.json"},
+                {Crew.ClassID, @"..\..\..\DataFiles\JSON\Crew.json"},
+                {Airport.ClassID, @"..\..\..\DataFiles\JSON\Airport.json"},
+                {Flight.ClassID, @"..\..\..\DataFiles\JSON\Flight.json"}
             };
 
             Dictionary<string, IFactory> factories = new()
@@ -68,18 +72,16 @@ namespace OODProj
                 repo.Value.DisplayObjects();
             }
 
-            //int i = 0;
-            //foreach (var repo in repos)
-            //{
-            //    repo.Value.SerializeFormat.Path = JSONPaths[i++];
-            //}
-            //repos[CargoPlane.ClassID].SerializeFormat.Path = JSONPaths[0];
+            foreach (var repo in repos)
+            {
+                repo.Value.SerializeFormat.Path = JSONPaths[repo.Key];
+            }
 
-            ////Serialization objects 
-            //foreach (var repo in repos)
-            //{
-            //    repo.Value.SerializeRepository();
-            //}
+            //Serialization objects 
+            foreach (var repo in repos)
+            {
+                repo.Value.SerializeRepository();
+            }
         }
     }
 }

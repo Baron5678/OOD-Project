@@ -53,7 +53,7 @@ namespace OODProj.Data
 
         public override string ToString()
         {
-            return $"ID: {_id}\n Name: {_name}\n Code: {_code}\n Longitude: {_longitude}\n Latitude: {_latitude}\n AMSL: {_AMSL}\n Country: {_country}";
+            return $"[Airport]\nID: {_id}\n Name: {_name}\n Code: {_code}\n Longitude: {_longitude}\n Latitude: {_latitude}\n AMSL: {_AMSL}\n Country: {_country}\n";
         }
 
         public object Clone()

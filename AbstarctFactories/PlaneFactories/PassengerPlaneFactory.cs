@@ -16,9 +16,9 @@ namespace OODProj.AbstarctFactories.PlaneFactories
                                       atomicVals[2],
                                       atomicVals[3],
                                       atomicVals[4],
+                                     ushort.Parse(atomicVals[5]),
                                      ushort.Parse(atomicVals[6]),
-                                     ushort.Parse(atomicVals[7]),
-                                     ushort.Parse(atomicVals[8]));
+                                     ushort.Parse(atomicVals[7]));
         }
     }
 }

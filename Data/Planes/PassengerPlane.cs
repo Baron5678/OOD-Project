@@ -50,7 +50,7 @@ namespace OODProj.Data.Planes
 
         public override string ToString()
         {
-            return $"ID: {_id}\n Serial: {_serial}\n Country: {_country}\n Model: {_model}\n First Class Size: {_firstClassSize}\n Business Class Size: {_businessClassSize}\n Economy Class Size: {_economyClassSize}";
+            return $"[PassengerPlane]\n ID: {_id}\n Serial: {_serial}\n Country: {_country}\n Model: {_model}\n First Class Size: {_firstClassSize}\n Business Class Size: {_businessClassSize}\n Economy Class Size: {_economyClassSize}\n";
         }
 
         public object Clone()

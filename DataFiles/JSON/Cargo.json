@@ -1,0 +1,92 @@
+[
+  {
+    "ID": 24,
+    "Weight": "18.77",
+    "Code": "LRQ646",
+    "Description": "Electronics"
+  },
+  {
+    "ID": 25,
+    "Weight": "33.49",
+    "Code": "ZMI168",
+    "Description": "Pharmaceuticals"
+  },
+  {
+    "ID": 26,
+    "Weight": "42.25",
+    "Code": "KUU989",
+    "Description": "Perishable food items"
+  },
+  {
+    "ID": 27,
+    "Weight": "24.0",
+    "Code": "GVQ884",
+    "Description": "Clothing and apparel"
+  },
+  {
+    "ID": 28,
+    "Weight": "14.43",
+    "Code": "ZXH867",
+    "Description": "Automotive parts"
+  },
+  {
+    "ID": 29,
+    "Weight": "6.35",
+    "Code": "SPB009",
+    "Description": "Machinery and equipment"
+  },
+  {
+    "ID": 30,
+    "Weight": "5.85",
+    "Code": "OTO611",
+    "Description": "Consumer goods"
+  },
+  {
+    "ID": 31,
+    "Weight": "45.6",
+    "Code": "CWI615",
+    "Description": "Live animals"
+  },
+  {
+    "ID": 32,
+    "Weight": "6.17",
+    "Code": "JNL749",
+    "Description": "Medical supplies"
+  },
+  {
+    "ID": 33,
+    "Weight": "37.85",
+    "Code": "UGN244",
+    "Description": "High-value items"
+  },
+  {
+    "ID": 34,
+    "Weight": "13.88",
+    "Code": "MEZ625",
+    "Description": "Dangerous goods"
+  },
+  {
+    "ID": 35,
+    "Weight": "17.51",
+    "Code": "THI925",
+    "Description": "Documents and mail"
+  },
+  {
+    "ID": 36,
+    "Weight": "20.18",
+    "Code": "UZC279",
+    "Description": "Agricultural products"
+  },
+  {
+    "ID": 37,
+    "Weight": "6.53",
+    "Code": "CZT523",
+    "Description": "Seafood"
+  },
+  {
+    "ID": 38,
+    "Weight": "21.28",
+    "Code": "SAI554",
+    "Description": "Emergency supplies"
+  }
+]

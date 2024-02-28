@@ -1,0 +1,51 @@
+[
+  {
+    "ID": 10,
+    "Serial": "E40042",
+    "Country": "USA",
+    "Model": "VectorSum A330",
+    "MaxLoad": 300
+  },
+  {
+    "ID": 11,
+    "Serial": "A97253",
+    "Country": "CAN",
+    "Model": "IntegralLoad B757",
+    "MaxLoad": 200
+  },
+  {
+    "ID": 12,
+    "Serial": "X00134",
+    "Country": "GBR",
+    "Model": "MatrixCargo C130",
+    "MaxLoad": 150
+  },
+  {
+    "ID": 13,
+    "Serial": "Z20225",
+    "Country": "DEU",
+    "Model": "EquationMaster D747",
+    "MaxLoad": 220
+  },
+  {
+    "ID": 14,
+    "Serial": "H46217",
+    "Country": "FRA",
+    "Model": "FunctionLift E190",
+    "MaxLoad": 190
+  },
+  {
+    "ID": 15,
+    "Serial": "V16515",
+    "Country": "JPN",
+    "Model": "GeometryFreight F100",
+    "MaxLoad": 600
+  },
+  {
+    "ID": 16,
+    "Serial": "L23623",
+    "Country": "AUS",
+    "Model": "AlgebraLoad G650",
+    "MaxLoad": 330
+  }
+]

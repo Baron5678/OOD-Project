@@ -51,7 +51,7 @@ namespace OODProj.Data.Users
 
         public override string ToString()
         {
-            return $"ID: {_id}\n Name: {_name}\n Age: {_age}\n Phone: {_phone}\n Email: {_email}\n Practice: {_class}\n Role: {_miles}";
+            return $"[Passenger]\nID: {_id}\n Name: {_name}\n Age: {_age}\n Phone: {_phone}\n Email: {_email}\n Practice: {_class}\n Role: {_miles}\n";
         }
 
         public object Clone()

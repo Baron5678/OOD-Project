@@ -1,0 +1,65 @@
+[
+  {
+    "ID": 17,
+    "Serial": "Z15625",
+    "Country": "DEU",
+    "Model": "PiFlyer A380",
+    "FirstClassSize": 2,
+    "BusinessClassSize": 14,
+    "EconomyClassSize": 24
+  },
+  {
+    "ID": 18,
+    "Serial": "X82033",
+    "Country": "FRA",
+    "Model": "DeltaWing B787",
+    "FirstClassSize": 3,
+    "BusinessClassSize": 10,
+    "EconomyClassSize": 32
+  },
+  {
+    "ID": 19,
+    "Serial": "N19779",
+    "Country": "JPN",
+    "Model": "SigmaJet C350",
+    "FirstClassSize": 1,
+    "BusinessClassSize": 19,
+    "EconomyClassSize": 27
+  },
+  {
+    "ID": 20,
+    "Serial": "H27925",
+    "Country": "AUS",
+    "Model": "ThetaAir D320",
+    "FirstClassSize": 5,
+    "BusinessClassSize": 16,
+    "EconomyClassSize": 30
+  },
+  {
+    "ID": 21,
+    "Serial": "Z05228",
+    "Country": "ITA",
+    "Model": "LambdaClass E170",
+    "FirstClassSize": 3,
+    "BusinessClassSize": 11,
+    "EconomyClassSize": 42
+  },
+  {
+    "ID": 22,
+    "Serial": "W46842",
+    "Country": "BRA",
+    "Model": "RhoRanger F220",
+    "FirstClassSize": 4,
+    "BusinessClassSize": 12,
+    "EconomyClassSize": 21
+  },
+  {
+    "ID": 23,
+    "Serial": "T21064",
+    "Country": "IND",
+    "Model": "EpsilonCruiser G280",
+    "FirstClassSize": 2,
+    "BusinessClassSize": 10,
+    "EconomyClassSize": 25
+  }
+]

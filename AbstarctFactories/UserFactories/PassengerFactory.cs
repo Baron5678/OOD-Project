@@ -18,8 +18,8 @@ namespace OODProj.AbstarctFactories.UserFactories
                                  ulong.Parse(atomicVals[3]),
                                  atomicVals[4],
                                  atomicVals[5],
-                                 atomicVals[5],
-                                 ulong.Parse(atomicVals[5]));
+                                 atomicVals[6],
+                                 ulong.Parse(atomicVals[7]));
         }
     }
 }

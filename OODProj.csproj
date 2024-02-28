@@ -12,9 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="DataFiles\Source\example_data.ftr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="DataFiles\Test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataFiles\JSON\" />
   </ItemGroup>
 
 </Project>
