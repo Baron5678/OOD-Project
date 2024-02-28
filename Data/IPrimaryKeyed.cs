@@ -2,6 +2,6 @@
 {
     public interface IPrimaryKeyed 
     {
-        public ulong ID { get; set; }
+         ulong ID { get; set; }
     }
 }
