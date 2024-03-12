@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OODProj.Repository.UserRepositories
@@ -14,8 +15,10 @@ namespace OODProj.Repository.UserRepositories
         private List<Passenger> _passengers;
         private ISerializer _serializeFormat;
 
-        public List<Passenger> Passengers { get => _passengers; set => _passengers = value; } 
-        public ISerializer SerializeFormat { get => _serializeFormat; set => _serializeFormat = value; }
+        public List<Passenger> Passengers { get => _passengers; set => _passengers = value; }
+
+        [JsonIgnore]
+        public ISerializer SerializeFormat { get => _serializeFormat; init => _serializeFormat = value; }
 
         public PassengerRepository()
         {
@@ -30,11 +33,7 @@ namespace OODProj.Repository.UserRepositories
 
         public void AddToRepo(IPrimaryKeyed keyedObject)
         {
-            var temp = keyedObject as Passenger;
-            if (temp is null)
-                throw new ArgumentException("Object cannot be added to Passenger Repository");
-
-            _passengers.Add(temp);
+            _passengers.Add((Passenger)keyedObject);
         }
 
         public void DisplayObjects()

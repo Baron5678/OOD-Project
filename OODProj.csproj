@@ -15,13 +15,19 @@
     <None Update="DataFiles\Source\example_data.ftr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="DataFiles\Test.txt">
+    <None Update="DataFiles\Source\Test.ftr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DataFiles\JSON\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NetworkSourceSimulator">
+      <HintPath>..\..\Downloads\Includes (1)\NetworkSourceSimulator.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using OODProj.Data;
 using OODProj.Data.Planes;
 using OODProj.StrategiesGettingData.DataSerializers;
+using System.Text.Json.Serialization;
 
 namespace OODProj.Repository.PlaneRepositories
 {
@@ -9,8 +10,9 @@ namespace OODProj.Repository.PlaneRepositories
         private List<CargoPlane> _cargoPlanes;
         private ISerializer _serializeFormat;
 
-        public ISerializer SerializeFormat { get => _serializeFormat; set => _serializeFormat = value; }
-        public List<CargoPlane> CargoPlanes { get => _cargoPlanes; set => _cargoPlanes = value; }
+        [JsonIgnore]
+        public ISerializer SerializeFormat { get => _serializeFormat; init => _serializeFormat = value; }
+        public List<CargoPlane> CargoPlanes { get => _cargoPlanes; init => _cargoPlanes = value; }
 
         public CargoPlaneRepository()
         {
@@ -19,13 +21,8 @@ namespace OODProj.Repository.PlaneRepositories
         }
 
         public void AddToRepo(IPrimaryKeyed keyedObject)
-        {
-            var temp = keyedObject as CargoPlane;
-
-            if (temp is null)
-                throw new ArgumentException("Object cannot be added to Cargo Plane Repository");
-
-            _cargoPlanes.Add(temp);
+        { 
+            _cargoPlanes.Add((CargoPlane)keyedObject);
         }
 
         public void SerializeRepository()

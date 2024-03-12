@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,24 +13,24 @@ namespace OODProj.Data
         static public string ClassID { get => "CA"; }
 
         private UInt64 _id;
-        private string _weight;
+        private float _weight;
         private string _code;
         private string _description;
 
         public UInt64 ID { get => _id; set => _id = value; }
-        public string Weight { get => _weight; set => _weight = value; }
-        public string Code { get => _code; set => _code = value; }
-        public string Description { get => _description; set => _description = value; }
+        public float Weight { get => _weight; internal set => _weight = value; }
+        public string Code { get => _code; internal set => _code = value; }
+        public string Description { get => _description; internal set => _description = value; }
 
         public Cargo()
         {
             _id = default;
-            _weight = string.Empty;
+            _weight = default;
             _code = string.Empty;
             _description = string.Empty;
         }
 
-        public Cargo(UInt64 id, string weight, string code, string description)
+        public Cargo(UInt64 id, float weight, string code, string description)
         {
             _id = id;
             _weight = weight;

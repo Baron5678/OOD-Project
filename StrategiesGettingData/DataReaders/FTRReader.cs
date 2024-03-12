@@ -16,6 +16,7 @@ namespace OODProj.StrategiesGettingData.DataReaders
 
         public void Read()
         {
+
             try
             {
                 StreamReader sr = new StreamReader(_path);

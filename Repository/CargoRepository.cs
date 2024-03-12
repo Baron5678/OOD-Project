@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OODProj.Repository
@@ -13,8 +14,10 @@ namespace OODProj.Repository
         private List<Cargo> _airports;
         private ISerializer _serializeFormat;
 
-        public List<Cargo> Cargos { get => _airports; set => _airports = value; }
-        public ISerializer SerializeFormat { get => _serializeFormat; set => _serializeFormat = value; }
+        public List<Cargo> Cargos { get => _airports; init => _airports = value; }
+
+        [JsonIgnore]
+        public ISerializer SerializeFormat { get => _serializeFormat; init => _serializeFormat = value; }
 
         public CargoRepository()
         {
@@ -28,13 +31,8 @@ namespace OODProj.Repository
         }
 
         public void AddToRepo(IPrimaryKeyed keyedObject)
-        {
-            var temp = keyedObject as Cargo;
-            
-            if (temp is null)
-                throw new ArgumentException("Object cannot be added to Cargo Repository");
-            
-            _airports.Add(temp);
+        { 
+            _airports.Add((Cargo)keyedObject);
         }
 
         public void DisplayObjects()

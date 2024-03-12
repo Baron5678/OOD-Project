@@ -11,7 +11,7 @@ namespace OODProj.Repository
 {
     public interface IRepository
     {
-        ISerializer SerializeFormat { get; set; }
+        ISerializer SerializeFormat { get; init; }
 
         void AddToRepo(IPrimaryKeyed keyedObject);
         void DisplayObjects();

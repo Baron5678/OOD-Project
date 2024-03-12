@@ -12,7 +12,7 @@ namespace OODProj.AbstarctFactories
         public IPrimaryKeyed Create(List<string> atomicVals, List<List<string>>? arrayVals)
         {
             return new Cargo(ulong.Parse(atomicVals[1]),
-                              atomicVals[2],
+                              float.Parse(atomicVals[2]),
                               atomicVals[3],
                               atomicVals[4]);
         }
