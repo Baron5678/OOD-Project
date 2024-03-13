@@ -67,6 +67,12 @@ In client, it is possible to indicate where to allocate serialzed objets by path
 value is path to allocate JSON file and key is ClassID, also convention for name of serialized files follows:  (ClassName).json.
 Currently, all serialized data is kept in ./DataFiles/JSON. 
 
+Project Task 2 New data source
+
+I have designed builder and directors to each class to be constructed from NetworkSource. 
+Using builder pattern, I encapsulate the construction of a complex object and allow it to be constructed step by step.
+Also using Visitor pattern and Command pattern, I have implemented command print, also expecting other commands to be implemented
+
 
 
 

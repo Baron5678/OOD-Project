@@ -16,7 +16,6 @@ using OODProj.Repository.UserRepositories;
 using OODProj.StrategiesGettingData.DataReaders;
 using OODProj.Commands;
 using NSS = NetworkSourceSimulator;
-using System.Windows.Input;
 
 namespace OODProj.DataSourceManager
 {
