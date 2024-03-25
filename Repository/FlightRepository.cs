@@ -1,5 +1,5 @@
 ﻿using OODProj.Data;
-using OODProj.StrategiesGettingData.DataSerializers;
+using OODProj.DataSerializers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

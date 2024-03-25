@@ -32,5 +32,24 @@ namespace OODProj.Utilities
          
             return uint64Array;
         }
+
+        public static bool TryParseUlongs(string array, out ulong[] ulongArray) {
+
+            if (array.IndexOf('[') == -1)
+            {
+                ulongArray = [];
+                return false;
+            }
+
+           string[] arrayElements = array.Substring(1, array.Length - 2).Split(";");
+           List<ulong> result = new List<ulong>();
+
+           foreach (string element in arrayElements)
+                result.Add(ulong.Parse(element));
+
+           ulongArray = result.ToArray();
+
+           return true;
+        }
     }
 }

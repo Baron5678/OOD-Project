@@ -37,9 +37,8 @@ namespace OODProj.Builders
         {
             if (value.Length != 4)
                 throw new ArgumentException("Longitude must be 4 bytes long");
-            _airport.Longitude = BitConverter.ToSingle(value);
+            _airport.Latitude = BitConverter.ToSingle(value);
         }
-
 
         public void BuildAMSL(byte[] value)
         {

@@ -3,7 +3,7 @@ using OODProj.Repository.PlaneRepositories;
 using OODProj.Repository.UserRepositories;
 using System.Text.Json;
 
-namespace OODProj.StrategiesGettingData.DataSerializers
+namespace OODProj.DataSerializers
 {
     public class JSONSerializer : ISerializer
     {
@@ -74,7 +74,7 @@ namespace OODProj.StrategiesGettingData.DataSerializers
         public void Serialize(AirportRepository repo)
         {
             string jsonString = JsonSerializer.Serialize(repo.Airports, _options);
-           
+
             WriteToFile(jsonString);
         }
     }

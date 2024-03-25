@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 
-namespace OODProj.StrategiesGettingData.DataSerializers
+namespace OODProj.DataSerializers
 {
     public interface ISerializer
     {

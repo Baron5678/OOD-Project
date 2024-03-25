@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OODProj.StrategiesGettingData.DataSerializers;
+using OODProj.DataSerializers;
 
 namespace OODProj.Repository
 {

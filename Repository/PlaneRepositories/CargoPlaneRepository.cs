@@ -1,6 +1,6 @@
 ﻿using OODProj.Data;
 using OODProj.Data.Planes;
-using OODProj.StrategiesGettingData.DataSerializers;
+using OODProj.DataSerializers;
 using System.Text.Json.Serialization;
 
 namespace OODProj.Repository.PlaneRepositories

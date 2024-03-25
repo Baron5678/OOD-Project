@@ -33,13 +33,13 @@ namespace OODProj.Builders
         {
             DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(BitConverter.ToInt64(value));
 
-            _flight.TakeoffTime = dateTimeOffset.ToLocalTime().ToString("HH:mm");
+            _flight.TakeoffTime = TimeOnly.Parse(dateTimeOffset.ToLocalTime().ToString("HH:mm"));
         }
         public void BuildLandingTime(byte[] value)
         {
             DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(BitConverter.ToInt64(value));
 
-            _flight.LandingTime = dateTimeOffset.ToLocalTime().ToString("HH:mm");
+            _flight.LandingTime = TimeOnly.Parse(dateTimeOffset.ToLocalTime().ToString("HH:mm"));
         }
         public void BuildPlaneID(byte[] value)
         {

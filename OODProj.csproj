@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FlightTrackerGUI" Version="1.0.0" />
     <PackageReference Include="LibGit2Sharp" Version="0.29.0" />
   </ItemGroup>
 

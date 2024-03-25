@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OODProj.StrategiesGettingData.DataReaders
+namespace OODProj.DataSources
 {
-    public interface IReader
+    public interface IDataDownloader
     {
-        void Read();
+        void Download();
     }
 }

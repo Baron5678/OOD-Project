@@ -1,4 +1,4 @@
-﻿using OODProj.DataSourceManager;
+﻿using OODProj.ApplicationConfiguration;
 
 namespace OODProj
 {
@@ -8,9 +8,11 @@ namespace OODProj
         {
             ApplicationManager app = ApplicationManager.Instance;
 
-            app.LoadNetworkData();
+            app.LoadFTRData();
+            app.StartGUI(); 
 
-            app.StartCommandInterpreter();
+            //app.LoadNetworkData();
+            //app.StartCommandInterpreter();
 
         }
     }

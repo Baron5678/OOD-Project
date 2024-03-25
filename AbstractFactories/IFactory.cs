@@ -10,10 +10,12 @@ using OODProj.Data;
 using OODProj.Data.Planes;
 using OODProj.Data.Users;
 
-namespace OODProj.AbstarctFactories
+namespace OODProj.AbstractFactories
 {
     public interface IFactory
     {
-        IPrimaryKeyed Create(List<string> atomicVals, List<List<string>>? arrayVals);
+        IPrimaryKeyed Create();
+        IFactory SetObjectData(string[] data);
+        void ResetObjectData();
     }   
 }

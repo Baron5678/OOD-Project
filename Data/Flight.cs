@@ -13,8 +13,8 @@ namespace OODProj.Data
         private UInt64 _id;
         private UInt64 _idOrigin;
         private UInt64 _idTarget;
-        private string _takeoffTime;
-        private string _landingTime;
+        private TimeOnly _takeoffTime;
+        private TimeOnly _landingTime;
         private float _longitude;
         private float _latitude;
         private float _AMSL;
@@ -26,8 +26,8 @@ namespace OODProj.Data
         public UInt64 ID { get => _id; set => _id = value; }
         public UInt64 IDOrigin { get => _idOrigin; set => _idOrigin = value; }
         public UInt64 IDTarget { get => _idTarget; set => _idTarget = value; }
-        public string TakeoffTime { get => _takeoffTime; set => _takeoffTime = value; }
-        public string LandingTime { get => _landingTime; set => _landingTime = value; }
+        public TimeOnly TakeoffTime { get => _takeoffTime; set => _takeoffTime = value; }
+        public TimeOnly LandingTime { get => _landingTime; set => _landingTime = value; }
         public float Longitude { get => _longitude; set => _longitude = value; }
         public float Latitude { get => _latitude; set => _latitude = value; }
         public float AMSL { get => _AMSL; set => _AMSL = value; }
@@ -41,8 +41,8 @@ namespace OODProj.Data
             _id = default;
             _idOrigin = default;
             _idTarget = default;
-            _takeoffTime = string.Empty;
-            _landingTime = string.Empty;
+            _takeoffTime = new();
+            _landingTime = new();
             _longitude = default;
             _latitude = default;
             _AMSL = default;
@@ -55,9 +55,9 @@ namespace OODProj.Data
         // Constructor
         public Flight(UInt64 id, 
                       UInt64 idOrigin, 
-                      UInt64 idTarget, 
-                      string takeoffTime, 
-                      string landingTime, 
+                      UInt64 idTarget,
+                      TimeOnly takeoffTime,
+                      TimeOnly landingTime, 
                       float longitude, 
                       float latitude, 
                       float amsl, 
