@@ -9,7 +9,7 @@ namespace OODProj.GUI
     public class FlightUpdateService
     {
         private readonly FlightRepository _flights;
-        private readonly FlightsGUIData _flightsGUIData;
+        private readonly FlightsGUIData _flightsGUIData; 
         private readonly FlightGUISetup _setup;
         private readonly System.Timers.Timer _timer;
         private readonly AirportIDManager _airportManager;

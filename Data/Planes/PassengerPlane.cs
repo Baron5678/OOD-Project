@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OODProj.NewsReport;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OODProj.Data.Planes
 {
-    public class PassengerPlane : IPlane, ICloneable
+    public class PassengerPlane : IPlane, ICloneable, IReportable
     {
         static public string ClassID { get => "PP"; }
 
@@ -58,5 +59,8 @@ namespace OODProj.Data.Planes
             return new PassengerPlane(_id, _serial, _country, _model, _firstClassSize, _businessClassSize, _economyClassSize);
         }
 
+        public string Accept(INewsProvider provider)
+            => provider.Visit(this);
+        
     }
 }

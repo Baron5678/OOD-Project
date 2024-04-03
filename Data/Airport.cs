@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OODProj.NewsReport;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OODProj.Data
 {
-    public class Airport: IPrimaryKeyed, ICloneable
+    public class Airport: IPrimaryKeyed, ICloneable, IReportable
     {
         static public string ClassID { get => "AI"; }
 
@@ -60,5 +61,8 @@ namespace OODProj.Data
         {
             return new Airport(_id, _name, _code, _longitude, _latitude, _AMSL, _country);
         }
+
+        public string Accept(INewsProvider provider)
+            => provider.Visit(this);
     }
 }

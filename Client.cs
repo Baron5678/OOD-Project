@@ -1,5 +1,6 @@
 ﻿using OODProj.ApplicationConfiguration;
 
+
 namespace OODProj
 {
     internal class Client
@@ -9,10 +10,7 @@ namespace OODProj
             ApplicationManager app = ApplicationManager.Instance;
 
             app.LoadFTRData();
-            app.StartGUI(); 
-
-            //app.LoadNetworkData();
-            //app.StartCommandInterpreter();
+            app.StartCommandInterpreter();
 
         }
     }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OODProj.GUI
 {
-    public class FlightGUISetup
+    public class FlightGUISetup 
     {
         private AirportIDManager _manager;
      

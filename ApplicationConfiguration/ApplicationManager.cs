@@ -13,6 +13,7 @@ using OODProj.DataSources;
 using OODProj.DataSources.MessageConvertors;
 using FlightTrackerGUI;
 using OODProj.GUI;
+using OODProj.NewsReport;
 
 namespace OODProj.ApplicationConfiguration
 {
@@ -30,6 +31,9 @@ namespace OODProj.ApplicationConfiguration
         private AirportIDManager _airportIDManager;
         private FlightUpdateService _service;
         private IDataDownloader? _downloader;
+        private List<INewsProvider> _newsProviders;
+        private List<IReportable> _reportables;
+        private NewsGenerator _newsGenerator;
 
         private ApplicationManager()
         {
@@ -89,15 +93,28 @@ namespace OODProj.ApplicationConfiguration
             };
 
             _container = new DataContainer(_repos);
+            _newsProviders = new()
+            {
+                new Television("Abelian Television"),
+                new Television("Channel TV-Tensor"),
+                new Radio("Quantifier radio"),
+                new Radio("Shmem radio"),
+                new Newspaper("Categories Journal"),
+                new Newspaper("Polytechnical Gazette")
+            };
+            _reportables = new();
+            _newsGenerator = new(_newsProviders, _reportables );
 
             _commands = new()
             {
                 { "print", new Print(_container) },
+                { "report", new Report(_newsGenerator) },
             };
 
             _airportIDManager = new();
             _downloader = null;
             _service = new FlightUpdateService(_container.FlightData, _airportIDManager);
+
         }
 
         public static ApplicationManager Instance { get => Application.Value; }
@@ -108,6 +125,9 @@ namespace OODProj.ApplicationConfiguration
            _downloader = new FTRDownloader(_readerPaths[0], _factories, _repos);
            _downloader.Download();
            _airportIDManager.InitializeByRepo(_container.AirportData);
+           _reportables.AddRange(_container.AirportData.Airports);
+           _reportables.AddRange(_container.CargoPlaneData.CargoPlanes);
+           _reportables.AddRange(_container.PassengerPlaneData.PassengerPlane);
         }
 
         public void LoadNetworkData()
@@ -129,9 +149,11 @@ namespace OODProj.ApplicationConfiguration
                         Console.WriteLine("Command not found");
 
                     _commands[command].Execute();
+                    Console.Write($"{Environment.UserName}$: ");
                 }
                 catch (ArgumentException ex)
                 {
+                    Console.Write($"{Environment.UserName}$: ");
                     Console.WriteLine(ex.Message);
                 }
             }
