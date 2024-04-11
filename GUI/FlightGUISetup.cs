@@ -42,8 +42,6 @@ namespace OODProj.GUI
             var interpolatedLongitude = double.Lerp(originAirport.Longitude, targetAirport.Longitude, factor);
             var interpolatedLatitude = double.Lerp(originAirport.Latitude, targetAirport.Latitude, factor);
 
-            Console.WriteLine($"Interpolated position: {interpolatedLatitude};{interpolatedLongitude}");
-
             return new WorldPosition(interpolatedLongitude, interpolatedLatitude);
         }
 

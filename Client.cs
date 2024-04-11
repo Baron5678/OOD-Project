@@ -8,10 +8,9 @@ namespace OODProj
         static void Main(string[] args)
         {
             ApplicationManager app = ApplicationManager.Instance;
-
             app.LoadFTRData();
+            app.StartGUIAsync();
             app.StartCommandInterpreter();
-
         }
     }
 }

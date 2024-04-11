@@ -7,8 +7,8 @@ namespace OODProj.NewsReport
         private List<INewsProvider> _providers;
         private List<IReportable> _reportables;
 
-        int currentReportableIndex = -1;
-        int currentNewsProviderIndex = -1;
+        private int currentReportableIndex = -1;
+        private int currentNewsProviderIndex = 0;
 
         public NewsGenerator()
         {
@@ -28,16 +28,16 @@ namespace OODProj.NewsReport
 
         public bool IsAllGenerated { get => currentReportableIndex == _reportables.Count - 1 && currentNewsProviderIndex == _providers.Count - 1; }
 
+        public string CurrentItem { get => _reportables[currentReportableIndex].Accept(_providers[currentNewsProviderIndex]); }
+
         public string GenerateNextNews()
         {
-            currentNewsProviderIndex = 0;
             currentReportableIndex++;
             if (currentReportableIndex >= _reportables.Count)
             {
                 currentNewsProviderIndex++;
                 currentReportableIndex = 0;
             }
-
             return _reportables[currentReportableIndex].Accept(_providers[currentNewsProviderIndex]);
         }
     }

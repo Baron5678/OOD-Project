@@ -156,6 +156,12 @@ namespace OODProj.ApplicationConfiguration
                     Console.Write($"{Environment.UserName}$: ");
                     Console.WriteLine(ex.Message);
                 }
+                catch (KeyNotFoundException ex)
+                {
+                    Console.Write($"{Environment.UserName}$: ");
+                    Console.WriteLine(ex.Message);
+
+                }
             }
         }
 
@@ -163,6 +169,13 @@ namespace OODProj.ApplicationConfiguration
         {
             _service.StartUpdateGUI();
             Runner.Run();
+        }
+
+        public void StartGUIAsync()
+        {
+            var guiRunner = new Thread(StartGUI);
+            guiRunner.IsBackground = true;
+            guiRunner.Start();
         }
 
         //for Debug Purposes 

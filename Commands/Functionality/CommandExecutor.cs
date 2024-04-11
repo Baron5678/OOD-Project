@@ -20,9 +20,13 @@ namespace OODProj.Commands.Functionality
 
         public void Visit(Report printCommand, INewsIterator newsGenerator)
         {
-            Console.WriteLine(newsGenerator.GenerateNextNews());
-            if (newsGenerator.IsAllGenerated)
-                Console.WriteLine("All news generated");
+            //if (newsGenerator.IsAllGenerated)
+            //    Console.WriteLine("All news generated");
+            while (!newsGenerator.IsAllGenerated) {
+                Console.WriteLine(newsGenerator.GenerateNextNews());
+            }
+            Console.WriteLine(newsGenerator.CountNews);
+            Console.WriteLine("All news generated");
         }
     }
 }
