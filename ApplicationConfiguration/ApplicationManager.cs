@@ -14,6 +14,8 @@ using OODProj.DataSources.MessageConvertors;
 using FlightTrackerGUI;
 using OODProj.GUI;
 using OODProj.NewsReport;
+using OODProj.UpdateDataService;
+using OODProj.Data.Observers;
 
 namespace OODProj.ApplicationConfiguration
 {
@@ -24,23 +26,28 @@ namespace OODProj.ApplicationConfiguration
         private readonly Dictionary<string, IFactory> _factories;
         private readonly Dictionary<string, IRepository> _repos;
         private readonly Dictionary<string, IMessageConvertor> _convertors;
+        private readonly Dictionary<string, IManagerID> _managers;
         private readonly Dictionary<string, IPCommand> _commands;
         private readonly Dictionary<string, string> _jSONPaths;
         private readonly List<string> _readerPaths;
         private readonly DataContainer _container;
-        private AirportIDManager _airportIDManager;
         private FlightUpdateService _service;
         private IDataDownloader? _downloader;
         private List<INewsProvider> _newsProviders;
         private List<IReportable> _reportables;
+        private List<string> _reportableIDs;
         private NewsGenerator _newsGenerator;
+        private DownloaderSettings? _downloaderSettings;
+        private UpdateService _updater;
+        private ObserverInitializator _observerInitializator;
 
         private ApplicationManager()
         {
             _readerPaths = new()
             {
                 @"..\..\..\DataFiles\Source\example_data.ftr",
-                @"..\..\..\DataFiles\Source\Test.ftr"
+                @"..\..\..\DataFiles\Source\Test.ftr",
+                @"..\..\..\DataFiles\Source\example.ftre"
             };
 
             _jSONPaths = new() {
@@ -52,18 +59,18 @@ namespace OODProj.ApplicationConfiguration
                 {Airport.ClassID, @"..\..\..\DataFiles\JSON\Airport.json"},
                 {Flight.ClassID, @"..\..\..\DataFiles\JSON\Flight.json"}
             };
-
+            _observerInitializator = new();
             _factories = new()
             {
-                { CargoPlane.ClassID, new CargoPlaneFactory() },
-                { PassengerPlane.ClassID, new PassengerPlaneFactory() },
-                { Cargo.ClassID, new CargoFactory() },
-                { Passenger.ClassID, new PassengerFactory() },
-                { "PA", new PassengerFactory() },
-                { Crew.ClassID, new CrewFactory() },
-                { "CR", new CrewFactory() },
-                { Airport.ClassID, new AirportFactory() },
-                { Flight.ClassID, new FlightFactory() },
+                { CargoPlane.ClassID, new CargoPlaneFactory(_observerInitializator) },
+                { PassengerPlane.ClassID, new PassengerPlaneFactory(_observerInitializator) },
+                { Cargo.ClassID, new CargoFactory(_observerInitializator) },
+                { Passenger.ClassID, new PassengerFactory(_observerInitializator) },
+                { "PA", new PassengerFactory(_observerInitializator) },
+                { Crew.ClassID, new CrewFactory(_observerInitializator) },
+                { "CR", new CrewFactory(_observerInitializator) },
+                { Airport.ClassID, new AirportFactory(_observerInitializator) },
+                { Flight.ClassID, new FlightFactory(_observerInitializator) },
             };
 
             _repos = new()
@@ -92,7 +99,11 @@ namespace OODProj.ApplicationConfiguration
                 { Flight.ClassID, new FlightMessageConvertor() }
             };
 
-            _container = new DataContainer(_repos);
+            _managers = new() 
+            {
+                { Airport.ClassID, new AirportManagerID() }
+            };
+
             _newsProviders = new()
             {
                 new Television("Abelian Television"),
@@ -102,37 +113,54 @@ namespace OODProj.ApplicationConfiguration
                 new Newspaper("Categories Journal"),
                 new Newspaper("Polytechnical Gazette")
             };
-            _reportables = new();
-            _newsGenerator = new(_newsProviders, _reportables );
-
+            _reportables = [];
+            _reportableIDs = ["AI", "CP", "PP"];
+            _container = new DataContainer(_repos);
+            _newsGenerator = new(_newsProviders, _reportables);
             _commands = new()
             {
                 { "print", new Print(_container) },
                 { "report", new Report(_newsGenerator) },
             };
-
-            _airportIDManager = new();
             _downloader = null;
-            _service = new FlightUpdateService(_container.FlightData, _airportIDManager);
-
+            _downloaderSettings = null;
+            _service = new FlightUpdateService(_container.FlightData, _managers[Airport.ClassID]);
+            _updater = new UpdateService(_readerPaths[2]);
         }
 
         public static ApplicationManager Instance { get => Application.Value; }
 
 
         public void LoadFTRData()
-        { 
-           _downloader = new FTRDownloader(_readerPaths[0], _factories, _repos);
+        {
+            if (_downloaderSettings is ByteDownloaderSettings)
+                _downloaderSettings = null;
+            if (_downloaderSettings is null) 
+                _downloaderSettings = new FTRDownloaderSettings(_readerPaths[0], 
+                                                                _factories, 
+                                                                _repos, 
+                                                                _managers,
+                                                                _reportables,
+                                                                _reportableIDs);
+           _downloader = new FTRDownloader(_downloaderSettings);
            _downloader.Download();
-           _airportIDManager.InitializeByRepo(_container.AirportData);
-           _reportables.AddRange(_container.AirportData.Airports);
-           _reportables.AddRange(_container.CargoPlaneData.CargoPlanes);
-           _reportables.AddRange(_container.PassengerPlaneData.PassengerPlane);
+            _observerInitializator.SetUpRelation();
+
         }
 
         public void LoadNetworkData()
         {
-            _downloader = new ByteDownloader(_readerPaths[1], _factories, _repos, _convertors);
+            if (_downloaderSettings is FTRDownloaderSettings)
+                _downloaderSettings = null;
+            if (_downloaderSettings is null)
+                _downloaderSettings = new ByteDownloaderSettings(_readerPaths[0], 
+                                                                _factories, 
+                                                                _repos, 
+                                                                _convertors, 
+                                                                _managers, 
+                                                                _reportables, 
+                                                                _reportableIDs);
+            _downloader = new ByteDownloader(_downloaderSettings);
             _downloader.Download();
         }
 
@@ -163,6 +191,11 @@ namespace OODProj.ApplicationConfiguration
 
                 }
             }
+        }
+
+        public void UpdateData() 
+        { 
+           _updater.Update();
         }
 
         public void StartGUI() 

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using OODProj.Data.Observers;
+using OODProj.Logging;
 
 namespace OODProj.Data.Users
 {
-    public class Passenger : IUser, ICloneable
+    public class Passenger : IUser, ICloneable, ISubject
     {
         static public string ClassID { get => "P"; }
 
@@ -18,13 +21,113 @@ namespace OODProj.Data.Users
         private string _class;
         private ulong _miles;
 
-        public ulong ID { get => _id; set => _id = value; }
-        public string Name { get => _name; set => _name = value; }
-        public ulong Age { get => _age; set => _age = value; }
-        public string Phone { get => _phone; set => _phone = value; }
-        public string Email { get => _email; set => _email = value; }
-        public string Class { get => _class; set => _class = value; }
-        public ulong Miles { get => _miles; set => _miles = value; }
+        public ulong ID 
+        { 
+            get => _id; 
+            set 
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Passenger";
+                state.PropertyName = "ID";
+                state.PrevValue = _id;
+                _id = value;
+                state.UpdatedValue = _id;
+                Log.Instance.LogWrite(state);
+                Notify(); 
+            } 
+        }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                var state = new State<string>();
+                state.ObjectName = "Passenger";
+                state.PropertyName = "Name";
+                state.PrevValue = _name;
+                _name = value;
+                state.UpdatedValue = _name;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public ulong Age
+        {
+            get => _age;
+            set
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Passenger";
+                state.PropertyName = "Age";
+                state.PrevValue = _age;
+                _age = value;
+                state.UpdatedValue = _age;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public string Phone
+        {
+            get => _phone;
+            set
+            {
+                var state = new State<string>();
+                state.ObjectName = "Passenger";
+                state.PropertyName = "Phone";
+                state.PrevValue = _phone;
+                _phone = value;
+                state.UpdatedValue = _phone;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                var state = new State<string>();
+                state.ObjectName = "Passenger";
+                state.PropertyName = "Email";
+                state.PrevValue = _email;
+                _email = value;
+                state.UpdatedValue = _email;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public string Class 
+        { 
+            get => _class; 
+            set
+            {
+                var state = new State<string>();
+                state.ObjectName = "Passenger";
+                state.PropertyName = "Class";
+                state.PrevValue = _class;
+                _class = value;
+                state.UpdatedValue = _class;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public ulong Miles 
+        { 
+            get => _miles; 
+            set
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Passenger";
+                state.PropertyName = "Miles";
+                state.PrevValue = _miles;
+                _miles = value;
+                state.UpdatedValue = _miles;
+                Log.Instance.LogWrite(state);
+            }
+        }
+
+        // list of observers
+        private ulong _prevID;
+        [JsonIgnore]
+        public List<IObserver> Observers { get; set; }
+        [JsonIgnore]
+        public ulong PrevID { get => _prevID; set => _prevID = value; }
+
 
         //Default ctor
         public Passenger()
@@ -36,6 +139,8 @@ namespace OODProj.Data.Users
             _email = string.Empty;
             _class = string.Empty;
             _miles = default;
+            _prevID = default;
+            Observers = [];
         }
 
         public Passenger(ulong id, string name, ulong age, string phone, string email, string @class, ulong miles)
@@ -47,6 +152,8 @@ namespace OODProj.Data.Users
             _email = email;
             _class = @class;
             _miles = miles;
+            _prevID = default;
+            Observers = [];
         }
 
         public override string ToString()
@@ -59,5 +166,22 @@ namespace OODProj.Data.Users
             return new Passenger(_id, _name, _age, _phone, _email, _class, _miles);
         }
 
+        public void Attach(IObserver observer)
+        {
+            Observers.Add(observer);
+        }
+
+        public void Detach(IObserver observer)
+        {
+             Observers.Remove(observer);
+        }
+
+        public void Notify()
+        {
+            foreach (var observer in Observers)
+            {
+                observer.UpdateID(this);
+            }
+        }
     }
 }

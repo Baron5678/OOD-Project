@@ -1,39 +1,161 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using OODProj.Data.Observers;
+using OODProj.Data.Planes;
+using OODProj.Data.Users;
+using OODProj.Logging;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace OODProj.Data
 {
-    public class Flight : IPrimaryKeyed, ICloneable
+    public class Flight : IPrimaryKeyed, ICloneable, IObserver, IPositioned
     {
         static public string ClassID { get => "FL"; }
 
-        private UInt64 _id;
-        private UInt64 _idOrigin;
-        private UInt64 _idTarget;
+        private ulong _id;
+        private ulong _prevID;
+        private ulong _idOrigin;
+        private ulong _idTarget;
         private TimeOnly _takeoffTime;
         private TimeOnly _landingTime;
         private float _longitude;
         private float _latitude;
         private float _AMSL;
-        private UInt64 _idPlane;
-        private UInt64[] _idCargos;
-        private UInt64[] _idLoad;
+        private ulong _idPlane;
+        private ulong[] _idCargos;
+        private ulong[] _idLoad;
+
 
         // Properties
-        public UInt64 ID { get => _id; set => _id = value; }
-        public UInt64 IDOrigin { get => _idOrigin; set => _idOrigin = value; }
-        public UInt64 IDTarget { get => _idTarget; set => _idTarget = value; }
-        public TimeOnly TakeoffTime { get => _takeoffTime; set => _takeoffTime = value; }
-        public TimeOnly LandingTime { get => _landingTime; set => _landingTime = value; }
-        public float Longitude { get => _longitude; set => _longitude = value; }
-        public float Latitude { get => _latitude; set => _latitude = value; }
-        public float AMSL { get => _AMSL; set => _AMSL = value; }
-        public UInt64 IDPlane { get => _idPlane; set => _idPlane = value; }
-        public UInt64[] IDCargos { get => _idCargos; set => _idCargos = value; }
-        public UInt64[] IDLoad { get => _idLoad; set => _idLoad = value; }
+        public ulong ID
+        {
+            get => _id;
+            set
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "ID";
+                state.PrevValue = _id;
+                _id = value;
+                state.UpdatedValue = _id;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public ulong IDOrigin
+        {
+            get => _idOrigin;
+            set
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDOrigin";
+                state.PrevValue = _idOrigin;
+                _idOrigin = value;
+                state.UpdatedValue = _idOrigin;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public ulong IDTarget
+        {
+            get => _idTarget;
+            set
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDTarget";
+                state.PrevValue = _idTarget;
+                _idTarget = value;
+                state.UpdatedValue = _idTarget;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public TimeOnly TakeoffTime
+        {
+            get => _takeoffTime;
+            set
+            {
+                var state = new State<TimeOnly>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "TakeoffTime";
+                state.PrevValue = _takeoffTime;
+                _takeoffTime = value;
+                state.UpdatedValue = _takeoffTime;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public TimeOnly LandingTime
+        {
+            get => _landingTime;
+            set
+            {
+                var state = new State<TimeOnly>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "LandingTime";
+                state.PrevValue = _landingTime;
+                _landingTime = value;
+                state.UpdatedValue = _landingTime;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public float Longitude
+        {
+            get => _longitude;
+            set
+            {
+                var state = new State<float>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "Longitude";
+                state.PrevValue = _longitude;
+                _longitude = value;
+                state.UpdatedValue = _longitude;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public float Latitude
+        {
+            get => _latitude;
+            set
+            {
+                var state = new State<float>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "Latitude";
+                state.PrevValue = _latitude;
+                _latitude = value;
+                state.UpdatedValue = _latitude;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public float AMSL
+        {
+            get => _AMSL;
+            set
+            {
+                var state = new State<float>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "AMSL";
+                state.PrevValue = _AMSL;
+                _AMSL = value;
+                state.UpdatedValue = _AMSL;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public ulong IDPlane
+        {
+            get => _idPlane;
+            set
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDPlane";
+                state.PrevValue = _idPlane;
+                _idPlane = value;
+                state.UpdatedValue = _idPlane;
+                Log.Instance.LogWrite(state);
+            }
+        }
+        public ulong[] IDCargos { get => _idCargos; set => _idCargos = value; }
+        public ulong[] IDLoad { get => _idLoad; set => _idLoad = value; }
+        [JsonIgnore]
+        public ulong PrevID { get => _prevID; set => _prevID = value; }
 
         //Default constructor
         public Flight()
@@ -53,16 +175,16 @@ namespace OODProj.Data
 
 
         // Constructor
-        public Flight(UInt64 id, 
-                      UInt64 idOrigin, 
+        public Flight(UInt64 id,
+                      UInt64 idOrigin,
                       UInt64 idTarget,
                       TimeOnly takeoffTime,
-                      TimeOnly landingTime, 
-                      float longitude, 
-                      float latitude, 
-                      float amsl, 
-                      UInt64 idPlane, 
-                      UInt64[] idCargos, 
+                      TimeOnly landingTime,
+                      float longitude,
+                      float latitude,
+                      float amsl,
+                      UInt64 idPlane,
+                      UInt64[] idCargos,
                       UInt64[] idLoad)
         {
             _id = id;
@@ -81,8 +203,8 @@ namespace OODProj.Data
         // ToString
         public override string ToString()
         {
-           StringBuilder sbIdCargos = new StringBuilder();
-           StringBuilder sbIdLoads = new StringBuilder();
+            StringBuilder sbIdCargos = new StringBuilder();
+            StringBuilder sbIdLoads = new StringBuilder();
 
             foreach (var item in _idCargos)
             {
@@ -114,5 +236,125 @@ namespace OODProj.Data
             return new Flight(_id, _idOrigin, _idTarget, _takeoffTime, _landingTime, _longitude, _latitude, _AMSL, _idPlane, _idCargos, _idLoad);
         }
 
+        public void UpdateID(Airport airport)
+        {
+            if (airport.PrevID == _idOrigin)
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDOrigin";
+                state.PrevValue = _idOrigin;
+                _idOrigin = airport.ID;
+                state.UpdatedValue = _idOrigin;
+                Log.Instance.LogWrite(state);
+            }
+
+            if (airport.PrevID == _idTarget)
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDTarget";
+                state.PrevValue = _idTarget;
+                _idTarget = airport.ID;
+                state.UpdatedValue = _idTarget;
+                Log.Instance.LogWrite(state);
+            }
+        }
+
+        public void UpdateID(CargoPlane cargoPlane)
+        {
+            if (cargoPlane.PrevID == _idPlane)
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDPlane";
+                state.PrevValue = _idPlane;
+                _idPlane = cargoPlane.ID;
+                state.UpdatedValue = _idPlane;
+                Log.Instance.LogWrite(state);
+            }
+        }
+
+        public void UpdateID(PassengerPlane passengerPlane)
+        {
+            if (passengerPlane.PrevID == _idPlane)
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDPlane";
+                state.PrevValue = _idPlane;
+                _idPlane = passengerPlane.ID;
+                state.UpdatedValue = _idPlane;
+                Log.Instance.LogWrite(state);
+            }
+        }
+
+        public void UpdateID(Cargo cargo)
+        {
+            var index = Array.IndexOf(_idLoad, cargo.PrevID);
+            if (index != -1)
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDLoad";
+                state.PrevValue = _idLoad[index];
+                _idLoad[index] = cargo.ID;
+                state.UpdatedValue = _idLoad[index];
+                Log.Instance.LogWrite(state);
+            }
+            else
+            {
+                var err_state = new ErrorState();
+                err_state.ObjectName = "Flight";
+                err_state.ErrorMessage = "Cargo not found in collection property IDLoads";
+                Log.Instance.LogWrite(err_state);
+            }
+        }
+
+        public void UpdateID(Passenger passenger)
+        {
+            var index = Array.IndexOf(_idLoad, passenger.PrevID);
+            if (index != -1)
+            {
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDLoad";
+                state.PrevValue = _idLoad[index];
+                _idLoad[index] = passenger.ID;
+                state.UpdatedValue = _idLoad[index];
+                Log.Instance.LogWrite(state);
+            }
+            else
+            {
+                var err_state = new ErrorState();
+                err_state.ObjectName = "Flight";
+                err_state.ErrorMessage = "Passenger not found in collection property IDLoads";
+                Log.Instance.LogWrite(err_state);
+            }
+        }
+
+        public void UpdateID(Crew crew)
+        {
+            var index = Array.IndexOf(_idCargos, crew.PrevID);
+            if (index != -1)
+            {
+                Console.WriteLine("Found");
+                var state = new State<ulong>();
+                state.ObjectName = "Flight";
+                state.PropertyName = "IDCargo";
+                state.PrevValue = _idCargos[index];
+                _idCargos[index] = crew.ID;
+                state.UpdatedValue = _idCargos[index];
+                Log.Instance.LogWrite(state);
+            }
+            else 
+            {
+                var err_state = new ErrorState();
+                err_state.ObjectName = "Flight";
+                err_state.ErrorMessage = "Crew not found in collection property IDCargos";
+                Log.Instance.LogWrite(err_state);
+            } 
+
+        }
     }
 }

@@ -1,32 +1,23 @@
 ﻿using Avalonia.Controls;
 using OODProj.AbstractFactories;
+using OODProj.Data;
 using OODProj.DataSources.MessageConvertors;
+using OODProj.IDManagement;
 using OODProj.Repository;
 using OODProj.Utilities;
 using NSS = NetworkSourceSimulator;
-
+using OODProj.ApplicationConfiguration;
 namespace OODProj.DataSources
 {
     public class ByteDownloader : IDataDownloader
     {
-        private readonly string _path = string.Empty;
-        private readonly Dictionary<string, IFactory> _factories;
-        private readonly Dictionary<string, IRepository> _repos;
-        private readonly Dictionary<string, IMessageConvertor> _convertors;
-
+        private ByteDownloaderSettings _settings;
         private Thread _server;
 
-        public ByteDownloader(string path,
-                              Dictionary<string, IFactory> factories,
-                              Dictionary<string, IRepository> repos,
-                              Dictionary<string, IMessageConvertor> convertors)
+        public ByteDownloader(DownloaderSettings settings)
         {
-            _path = path;
-            _factories = factories;
-            _repos = repos;
-            _convertors = convertors;
-
-            NSS.NetworkSourceSimulator network = new(_path, 100, 500);
+            _settings = (ByteDownloaderSettings)settings;
+            NSS.NetworkSourceSimulator network = new(_settings.SourceFile,1,5);
             network.OnNewDataReady += DownloadMessage;
             _server = new Thread(network.Run);
             _server.IsBackground = true;
@@ -45,18 +36,15 @@ namespace OODProj.DataSources
                 
                 string classID = Utility.BytesToString(currentMessage[1..3]);
 
-                if (classID == "PA")
-                    classID.Remove(1, 1);
-                
-                if (classID == "CR")
-                    classID.Remove(1, 1);
+                string[] data = _settings.Convertors[classID].ConvertToStrings(currentMessage);
 
-                string[] data = _convertors[classID].ConvertToStrings(currentMessage);
-
-                _repos[classID].AddToRepo(_factories[classID].SetObjectData(data).Create());
-
-                _factories[classID].ResetObjectData();
-
+                var primaryKeyedObject = _settings.Factories[classID].SetObjectData(data).Create();
+                if (_settings.ReportableIDs.Contains(classID))
+                    _settings.Reportables.Add((IReportable)primaryKeyedObject);
+                if (classID == "AI")
+                    _settings.Managers[classID].AddPrimaryKeyedObject(primaryKeyedObject);
+                _settings.Repositories[classID].AddToRepo(primaryKeyedObject);
+                _settings.Factories[classID].ResetObjectData();
             }
         }
     }

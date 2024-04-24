@@ -23,11 +23,12 @@
 
   <ItemGroup>
     <Folder Include="DataFiles\JSON\" />
+    <Folder Include="Logging\LogFiles\" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="NetworkSourceSimulator">
-      <HintPath>..\..\..\..\..\Downloads\Includes (1)\NetworkSourceSimulator.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\IncludesUpdated (1)\NetworkSourceSimulator.dll</HintPath>
     </Reference>
   </ItemGroup>
 

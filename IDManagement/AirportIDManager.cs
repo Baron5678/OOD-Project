@@ -1,5 +1,4 @@
-﻿using BruTile.Wms;
-using OODProj.Data;
+﻿using OODProj.Data;
 using OODProj.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,33 +8,39 @@ using System.Threading.Tasks;
 
 namespace OODProj.IDManagement
 {
-    public class AirportIDManager
+    public class AirportManagerID : IManagerID
     {
         private Dictionary<ulong, Airport> airportHashTable;
 
-        public AirportIDManager()
+        public AirportManagerID()
         {
             airportHashTable = new();
         }
 
-        public void AddAirport(Airport airport)
+        public void AddPrimaryKeyedObject(IPrimaryKeyed pkobj)
         {
-            if (airportHashTable.ContainsKey(airport.ID))
+            if (airportHashTable.ContainsKey(pkobj.ID))
                 throw new ArgumentException("Airport with this ID already exists");
-            airportHashTable.Add(airport.ID, airport);
+            var airport = pkobj as Airport;
+            if (airport is null)
+                throw new ArgumentException("IPrimaryKeyedObject is not an Airport");
+            airportHashTable.Add(pkobj.ID, airport);
         }
 
-        public Airport GetAirport(ulong id)
+        public IPrimaryKeyed GetPrimaryKeyedObject(ulong id)
         {
             if (!airportHashTable.ContainsKey(id))
-                throw new ArgumentException("Airport with this ID does not exist");
+                throw new ArgumentException("IPrimaryKeyedObject with this ID does not exist");
             return airportHashTable[id];
         }
 
-        public void InitializeByRepo(AirportRepository repo) 
+        public void InitializeByRepo(IRepository repo)
         {
-            foreach (var airport in repo.Airports)
-                AddAirport(airport);
+            var airportRepo = repo as AirportRepository;
+            if (airportRepo is null)
+                throw new ArgumentException("Repository is not an AirportRepository");
+            foreach (var airport in airportRepo.Airports)
+                AddPrimaryKeyedObject(airport);
         }
     }
 }
