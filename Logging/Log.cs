@@ -32,11 +32,19 @@ namespace OODProj.Logging
             }
         }
 
+        private string GetLogFilePath()
+        {
+            string directoryPath = @"..\..\..\Logging\LogFiles\";
+
+            string fileName = $"Log_{DateTime.Now:yyyy-MM-dd}.txt";
+            return Path.Combine(directoryPath, fileName);
+        }
+
         public void LogWrite<T>(State<T> state)
         {
             string line = $"-------------{GenerateSha256Hash(_id.ToString())}-------------\n\n" +
                 $"{state}";
-            File.AppendAllText(@$"..\..\..\Logging\LogFiles\Log", line + Environment.NewLine);
+            File.AppendAllText(GetLogFilePath(), line + Environment.NewLine);
             _id++;
         }
 
@@ -44,7 +52,7 @@ namespace OODProj.Logging
         {
             string line = $"-------------{GenerateSha256Hash(_id.ToString())}-------------\n\n" +
                 $"{errorState}\n";
-            File.AppendAllText(@$"..\..\..\Logging\LogFiles\Log", line + Environment.NewLine);
+            File.AppendAllText(GetLogFilePath(), line + Environment.NewLine);
             _id++;
         }
 
