@@ -42,5 +42,21 @@ namespace OODProj.Repository.PlaneRepositories
                 Console.WriteLine(plane.ToString());
             }
         }
+
+        public List<IPrimaryKeyed> GetPrimaryKeyedObjects()
+        {
+            return _passengerPlanes.Cast<IPrimaryKeyed>().ToList();
+        }
+
+        public void DeleteFromRepo(IPrimaryKeyed keyedObject)
+        {
+            _passengerPlanes.Remove((PassengerPlane)keyedObject);
+        }
+
+
+        public void DeleteAll()
+          =>_passengerPlanes.Clear();
+        
+
     }
 }

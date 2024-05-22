@@ -12,9 +12,11 @@ namespace OODProj.Repository
     public interface IRepository
     {
         ISerializer SerializeFormat { get; init; }
-
         void AddToRepo(IPrimaryKeyed keyedObject);
+        void DeleteFromRepo(IPrimaryKeyed keyedObject);
+        void DeleteAll();
         void DisplayObjects();
         void SerializeRepository();
+        List<IPrimaryKeyed> GetPrimaryKeyedObjects();
     }
 }

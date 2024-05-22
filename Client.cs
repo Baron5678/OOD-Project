@@ -14,14 +14,13 @@ namespace OODProj
         static void Main(string[] args)
         {
             ApplicationManager app = ApplicationManager.Instance;
-            Log.LogClear();
-            //app.LoadNetworkData();
+            //Log.LogClear();
             app.LoadFTRData();
-            //app.StartGUIAsync();
+            app.StartGUIAsync();
             //Thread.Sleep(10000);
-            app.UpdateData();
-            //app.ShowLoadedData();
+            //app.UpdateData();
             app.StartCommandInterpreter();
+            
         } 
     }
 }

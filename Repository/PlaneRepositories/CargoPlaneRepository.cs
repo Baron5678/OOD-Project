@@ -37,5 +37,19 @@ namespace OODProj.Repository.PlaneRepositories
                 Console.WriteLine(plane.ToString());
             }
         }
+
+        public List<IPrimaryKeyed> GetPrimaryKeyedObjects()
+        {
+            return _cargoPlanes.Cast<IPrimaryKeyed>().ToList();
+        }
+
+        public void DeleteFromRepo(IPrimaryKeyed keyedObject)
+        {
+            _cargoPlanes.Remove((CargoPlane)keyedObject);
+        }
+
+        public void DeleteAll()
+            => _cargoPlanes.Clear();
+
     }
 }

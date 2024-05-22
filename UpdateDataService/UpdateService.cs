@@ -46,10 +46,7 @@ namespace OODProj.UpdateDataService
                 posObject.Longitude = args.Longitude;
                 posObject.Latitude = args.Latitude;
                 posObject.AMSL = args.AMSL;
-                if (posObject is Flight)
-                {
-                    FlightUpdateService.IsUpdated = true;
-                }
+                posObject.IsUpdated = true;
             }
             else
             {

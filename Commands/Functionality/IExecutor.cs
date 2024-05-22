@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OODProj.Commands;
 using OODProj.Repository;
 using OODProj.NewsReport;
+using OODProj.DictionaryBuilders;
 
 namespace OODProj.Commands.Functionality
 {
@@ -13,5 +14,9 @@ namespace OODProj.Commands.Functionality
     {
         void Visit(Print printCommand, DataContainer data);
         void Visit(Report reportCommand, INewsIterator data);
+        void Visit(Display display, Dictionary<string, IRepository> repos, List<string>? Parameters);
+        void Visit(Update update, Dictionary<string, IRepository> repos, List<string>? Parameters);
+        void Visit(Delete delete, Dictionary<string, IRepository> repos, List<string>? Parameters);
+        void Visit(Add add, Dictionary<string, IRepository> repos, Dictionary<string, IDictionaryBuilder> builders, List<string>? Parameters);
     }
 }

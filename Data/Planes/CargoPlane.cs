@@ -114,6 +114,16 @@ namespace OODProj.Data.Planes
             _observers = [];
         }
 
+        public Dictionary<string, Func<IPrimaryKeyed, string>> PropertySet
+            => new() 
+            {
+                { "ID", plane => ((CargoPlane)plane).ID.ToString() },
+                { "Serial", plane => ((CargoPlane)plane).Serial },
+                { "Country", plane => ((CargoPlane)plane).Country },
+                { "Model", plane => ((CargoPlane)plane).Model },
+                { "MaxLoad", plane => ((CargoPlane)plane).MaxLoad.ToString()}
+            };
+
         public override string ToString()
         {
             return $"[CargoPlane]\n ID: {_id}\n Serial: {_serial}\n Country: {_country}\n Model: {_model}\n Max Load: {_maxload}\n";

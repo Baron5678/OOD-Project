@@ -116,9 +116,9 @@ namespace OODProj.Data
                 var state = new State<string>();
                 state.ObjectName = "Airport";
                 state.PropertyName = "Country";
-                state.PrevValue = Country;
-                Country = value;
-                state.UpdatedValue = Country;
+                state.PrevValue = _country;
+                _country = value;
+                state.UpdatedValue = _country;
                 Log.Instance.LogWrite(state);
             }
         }
@@ -129,6 +129,19 @@ namespace OODProj.Data
         [JsonIgnore]
         public ulong PrevID { get => _prevID; set => _prevID = value; }
 
+        public Dictionary<string, Func<IPrimaryKeyed, string>> PropertySet
+                => new()
+                {
+                    {"ID", (x) => ((Airport)x).ID.ToString()},
+                    {"Name", (x) => ((Airport)x).Name},
+                    { "Code", (x) => ((Airport)x).Code},
+                    { "Longitude", (x) => ((Airport)x).Longitude.ToString()},
+                    { "Latitude", (x) => ((Airport)x).Latitude.ToString()},
+                    { "AMSL", (x) => ((Airport)x).AMSL.ToString()},
+                    { "Country", (x) => ((Airport)x).Country}
+                };
+
+        public bool IsUpdated { get; set; } = false;
 
         public Airport()
         {
@@ -156,6 +169,7 @@ namespace OODProj.Data
             _prevID = default;
             Observers = [];
         }
+
 
         public override string ToString()
         {

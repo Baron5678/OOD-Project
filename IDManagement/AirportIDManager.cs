@@ -1,4 +1,5 @@
 ﻿using OODProj.Data;
+using OODProj.Logging;
 using OODProj.Repository;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,24 @@ namespace OODProj.IDManagement
                 throw new ArgumentException("Repository is not an AirportRepository");
             foreach (var airport in airportRepo.Airports)
                 AddPrimaryKeyedObject(airport);
+        }
+
+        public ulong AssignPrimaryKeyedID(ulong newID, string className)
+        {
+            if (airportHashTable.ContainsKey(newID))
+            {
+                return newID;
+            } 
+            else
+            {
+                ErrorState err = new()
+                {
+                    ErrorMessage = "This ID is Airport ID, choose Airport ID",
+                    ObjectName = className
+                };
+                Log.Instance.LogWrite(err);
+                return default;
+            }
         }
     }
 }

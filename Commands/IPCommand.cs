@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OODProj.Commands.Functionality;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace OODProj.Commands
 {
     public interface IPCommand
     {
-        void Execute();
+        public IExecutor Executor { get; init; }
+        public List<string>? Parameters { get; set; }
+        public void Execute();
     }
 }

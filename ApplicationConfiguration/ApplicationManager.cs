@@ -16,6 +16,9 @@ using OODProj.GUI;
 using OODProj.NewsReport;
 using OODProj.UpdateDataService;
 using OODProj.Data.Observers;
+using OODProj.DictionaryBuilders;
+using OODProj.DictionaryBuilders.PlanesBuilders;
+using OODProj.DictionaryBuilders.UserBuilders;
 
 namespace OODProj.ApplicationConfiguration
 {
@@ -24,6 +27,7 @@ namespace OODProj.ApplicationConfiguration
         private static readonly Lazy<ApplicationManager> Application = new Lazy<ApplicationManager>(() => new ApplicationManager());
 
         private readonly Dictionary<string, IFactory> _factories;
+        private readonly Dictionary<string, IDictionaryBuilder> _builders;
         private readonly Dictionary<string, IRepository> _repos;
         private readonly Dictionary<string, IMessageConvertor> _convertors;
         private readonly Dictionary<string, IManagerID> _managers;
@@ -104,6 +108,17 @@ namespace OODProj.ApplicationConfiguration
                 { Airport.ClassID, new AirportManagerID() }
             };
 
+            _builders = new()
+            {
+                { "CargoPlane", new CargoPlaneBuilder() },
+                { "PassengerPlane", new PassengerPlaneBuilder() },
+                { "Cargo", new CargoBuilder() },
+                { "Passenger", new PassengerBuilder() },
+                { "Crew", new CrewBuilder() },
+                { "Airport", new AirportBuilder() },
+                { "Flight", new FlightBuilder(_managers[Airport.ClassID]) }
+            };
+
             _newsProviders = new()
             {
                 new Television("Abelian Television"),
@@ -121,7 +136,18 @@ namespace OODProj.ApplicationConfiguration
             {
                 { "print", new Print(_container) },
                 { "report", new Report(_newsGenerator) },
+                { "display", new Display(_repos) },
+                { "update", new Update(_repos) },
+                { "delete", new Delete(_repos) },
+                { "add", new Add(_repos, _builders) },
             };
+            _repos.Add("Cargo", _repos[Cargo.ClassID]);
+            _repos.Add("CargoPlane", _repos[CargoPlane.ClassID]);
+            _repos.Add("Passenger", _repos[Passenger.ClassID]);
+            _repos.Add("PassengerPlane", _repos[PassengerPlane.ClassID]);
+            _repos.Add("Crew", _repos[Crew.ClassID]);
+            _repos.Add("Airport", _repos[Airport.ClassID]);
+            _repos.Add("Flight", _repos[Flight.ClassID]);
             _downloader = null;
             _downloaderSettings = null;
             _service = new FlightUpdateService(_container.FlightData, _managers[Airport.ClassID]);
@@ -167,16 +193,21 @@ namespace OODProj.ApplicationConfiguration
         public void StartCommandInterpreter()
         {
             Console.Write($"{Environment.UserName}$: ");
-
             string command;
+            List<string> set;
             while ((command = Console.ReadLine()!) != "exit")
             {
                 try
                 {
-                    if (!_commands.ContainsKey(command))
+                    set = [.. command.Split(' ')];
+                    if (!_commands.ContainsKey(set[0]))
                         Console.WriteLine("Command not found");
+                    if (set.Count != 1)
+                    {
+                        _commands[set[0]].Parameters = set[1..];
+                    }
 
-                    _commands[command].Execute();
+                    _commands[set[0]].Execute();
                     Console.Write($"{Environment.UserName}$: ");
                 }
                 catch (ArgumentException ex)

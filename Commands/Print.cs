@@ -12,17 +12,20 @@ namespace OODProj.Commands
     public class Print : IPCommand
     {
         private DataContainer _data;
-        private IExecutor _executor;
+        public IExecutor Executor { get; init; }
+        public List<string>? Parameters { get; set; } = null;
+
+        public IExecutor _executor => throw new NotImplementedException();
 
         public Print(DataContainer data)
         {
             _data = data;
-            _executor = new CommandExecutor();
+            Executor = new CommandExecutor();
         }
 
         public void Execute()
         {
-           _executor.Visit(this, _data);
+            Executor.Visit(this, _data);
         }
         
     }

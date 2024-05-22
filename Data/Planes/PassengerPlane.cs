@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace OODProj.Data.Planes
 {
-    public class PassengerPlane : IPlane, ICloneable, IReportable, ISubject
+    public class PassengerPlane: IPlane, ICloneable, IReportable, ISubject
     {
         static public string ClassID { get => "PP"; }
 
@@ -147,6 +147,22 @@ namespace OODProj.Data.Planes
             _economyClassSize = economyClassSize;
             Observers = [];
         }
+
+        public Dictionary<string, Func<IPrimaryKeyed, string>> PropertySet
+        {
+            get => new()
+            {
+                { "ID", plane => ((PassengerPlane)plane).ID.ToString() },
+                { "Serial",plane => ((PassengerPlane)plane).Serial },
+                { "Country", plane => ((PassengerPlane)plane).Country },
+                { "Model", plane => ((PassengerPlane)plane).Model },
+                { "FirstClassSize", plane => ((PassengerPlane)plane).FirstClassSize.ToString() },
+                { "BusinessClassSize", plane => ((PassengerPlane)plane).BusinessClassSize.ToString() },
+                { "EconomyClassSize", plane => ((PassengerPlane)plane).EconomyClassSize.ToString() }
+            };
+        }
+
+
 
         public override string ToString()
         {

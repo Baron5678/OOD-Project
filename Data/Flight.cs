@@ -1,6 +1,7 @@
 ﻿using OODProj.Data.Observers;
 using OODProj.Data.Planes;
 using OODProj.Data.Users;
+using OODProj.GUI;
 using OODProj.Logging;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -101,6 +102,7 @@ namespace OODProj.Data
             get => _longitude;
             set
             {
+                IsUpdated = true;
                 var state = new State<float>();
                 state.ObjectName = "Flight";
                 state.PropertyName = "Longitude";
@@ -115,6 +117,7 @@ namespace OODProj.Data
             get => _latitude;
             set
             {
+                IsUpdated = true;
                 var state = new State<float>();
                 state.ObjectName = "Flight";
                 state.PropertyName = "Latitude";
@@ -156,6 +159,22 @@ namespace OODProj.Data
         public ulong[] IDLoad { get => _idLoad; set => _idLoad = value; }
         [JsonIgnore]
         public ulong PrevID { get => _prevID; set => _prevID = value; }
+        [JsonIgnore]
+        public bool IsUpdated { get; set; } = false;
+
+        public Dictionary<string, Func<IPrimaryKeyed, string>> PropertySet
+            => new()
+            {
+                { "ID", (x) => ((Flight)x).ID.ToString() },
+                { "IDOrigin", (x) => ((Flight)x).IDOrigin.ToString() },
+                { "IDTarget", (x) => ((Flight)x).IDTarget.ToString() },
+                { "TakeoffTime", (x) => ((Flight)x).TakeoffTime.ToString() },
+                { "LandingTime", (x) => ((Flight)x).LandingTime.ToString() },
+                { "Longitude", (x) => ((Flight)x).Longitude.ToString() },
+                { "Latitude", (x) => ((Flight)x).Latitude.ToString() },
+                { "AMSL", (x) => ((Flight)x).AMSL.ToString() },
+                { "IDPlane", (x) => ((Flight)x).IDPlane.ToString() }  
+            };
 
         //Default constructor
         public Flight()
@@ -337,8 +356,7 @@ namespace OODProj.Data
         {
             var index = Array.IndexOf(_idCargos, crew.PrevID);
             if (index != -1)
-            {
-                Console.WriteLine("Found");
+            { 
                 var state = new State<ulong>();
                 state.ObjectName = "Flight";
                 state.PropertyName = "IDCargo";

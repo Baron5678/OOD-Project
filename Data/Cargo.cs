@@ -84,6 +84,17 @@ namespace OODProj.Data
         [JsonIgnore]
         public ulong PrevID { get => _prevID; set => _prevID = value; }
 
+        public Dictionary<string, Func<IPrimaryKeyed, string>> PropertySet
+            => new() 
+            {
+                { "ID", (x) => x.ID.ToString() },
+                { "Weight", (x) => ((Cargo)x).Weight.ToString() },
+                { "Code", (x) => ((Cargo)x).Code },
+                { "Description", (x) => ((Cargo)x).Description}
+            };
+             
+            
+
         public Cargo()
         {
             _id = default;

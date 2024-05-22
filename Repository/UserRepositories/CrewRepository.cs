@@ -43,5 +43,18 @@ namespace OODProj.Repository.UserRepositories
                 Console.WriteLine(passenger.ToString());
             }
         }
+
+        public List<IPrimaryKeyed> GetPrimaryKeyedObjects()
+        {
+            return _passengers.Cast<IPrimaryKeyed>().ToList();
+        }
+
+        public void DeleteFromRepo(IPrimaryKeyed keyedObject)
+        {
+            _passengers.Remove((Crew)keyedObject);
+        }
+
+        public void DeleteAll()
+          => _passengers.Clear();
     }
 }

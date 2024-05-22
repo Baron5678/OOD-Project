@@ -11,5 +11,6 @@ namespace OODProj.Data
         public float Longitude { get; set; }
         public float Latitude { get; set; }
         public float AMSL { get; set; }
+        public bool IsUpdated { get; set;}
     }
 }

@@ -4,25 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OODProj.NewsReport;
-using BruTile.Wms;
+using OODProj.Repository;
 
 namespace OODProj.Commands
 {
-    public class Report : IPCommand
+    public class Delete : IPCommand
     {
+        private Dictionary<string, IRepository> _repos;
         public IExecutor Executor { get; init; }
-        private INewsIterator _newsGenerator;
-        public List<string>? Parameters { get; set; } = null;
+        public List<string>? Parameters { get; set; }
 
-        public Report(INewsIterator newsGenerator)
+        public Delete(Dictionary<string, IRepository> repos)
         {
-            _newsGenerator = newsGenerator;
             Executor = new CommandExecutor();
+            _repos = repos;
         }
 
         public void Execute()
-            => Executor.Visit(this, _newsGenerator);
-         
+        {
+            Executor.Visit(this, _repos, Parameters);
+        }
     }
 }

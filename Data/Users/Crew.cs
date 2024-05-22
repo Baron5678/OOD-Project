@@ -150,6 +150,21 @@ namespace OODProj.Data.Users
             Observers = [];
         }
 
+        public Dictionary<string, Func<IPrimaryKeyed, string>> PropertySet
+        {
+            get => new()
+            {
+                { "ID", crew => ((Crew)crew).ID.ToString() },
+                { "Name", crew => ((Crew)crew).Name },
+                { "Age", crew => ((Crew)crew).Age.ToString() },
+                { "Phone", crew => ((Crew)crew).Phone },
+                { "Email", crew => ((Crew)crew).Email },
+                { "Practice", crew => ((Crew)crew).Practice.ToString() },
+                { "Role", crew => ((Crew)crew).Role }
+            };
+                
+        } 
+
         public override string ToString()
         {
             return $"[Crew]\nID: {_id}\n Name: {_name}\n Age: {_age}\n Phone: {_phone}\n Email: {_email}\n Practice: {_practice}\n Role: {_role}\n";

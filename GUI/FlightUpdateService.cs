@@ -37,7 +37,7 @@ namespace OODProj.GUI
             {
                if (flight.TakeoffTime >= currentTime && flight.LandingTime <= currentTime)
                 {
-                    if (IsUpdated)
+                    if (flight.IsUpdated)
                     {
                         guiItem = _setupDec.UpdateInfo(flight, currentTime);
                     }
